@@ -10,16 +10,16 @@ using namespace std;
 
 //Global Variable - accessible in all functions below
 vector<string> world_map = {
-	"************",
-	"* r   |    *",
-	"*  s  | d  *",
-	"*     |    *",
-	"*   x ---  *",
-	"*        z *",
-	"*      g   *",
-	"* d        *",
-	"*    s r   *",
-	"************"
+	"*************",
+	"* r    |    *",
+	"*  s   | d  *",
+	"*      |    *",
+	"*    x ---  *",
+	"*         z *",
+	"*       g   *",
+	"* d         *",
+	"*     s r   *",
+	"*************"
 };
 
 char get_world_location(size_t row, size_t col) {
