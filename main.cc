@@ -114,6 +114,7 @@ vector<string> worldMap = {
 	"|                               e       |",
 	"|                                       |",
 	"|                                       |",
+	"|***************************************|",
 	"|                                       |",
 	"|                                       |",
 	"|                                       |",
@@ -159,13 +160,12 @@ void printMap(size_t playRow, size_t playColumn) {
 int main() {
 	const int ROWS = worldMap.size();
 	const int COLUMNS = worldMap.at(0).size();
-	int rows = ROWS / 2;
-	int columns = COLUMNS / 2;
-	int prevRow = -1;
-	int prevCol = -1; //previous positions
-	int choice = 0;
-	int wall = 0;
+	int rows = ROWS / 2, columns = COLUMNS / 2;
+	int prevRow = -1, prevCol = -1; //previous positions
+	int choice = 0; //User input choice
+	int wall = 0; // Might get rid of later idk
 	bool battle = false;
+	
 	set_raw_mode(true);
 	show_cursor(false);
 
@@ -185,7 +185,7 @@ int main() {
 			cout.flush();
 		}
 
-		if (getLocation(rows, columns) == 'e') {
+		if (getLocation(rows, columns) == 'e') { //Enemy encounter
 			setLocation(rows, columns, ' ');
 			movecursor(2, COLUMNS + 5);
 			cout << BOLDRED << "ENEMY ENCOUNTERED\n";
@@ -196,7 +196,10 @@ int main() {
 		if (getLocation(rows, columns) == '-' or getLocation(rows, columns) == '|') {
 			movecursor(2, COLUMNS + 5);
 			cout << "That's a wall\n";
-		}
+		} else if (getLocation(rows, columns) == '*') {
+            movecursor(2, COLUMNS + 5);
+            cout << "You may not enter this area yet. Please [insert action]\n";
+        }
 		/*if (wall == 20) {
 			cout << "You have been determined to be drunk, and therefore cannot defeat the princess\n";
 			cout << "Please sober up before proceeding\n";
@@ -214,7 +217,7 @@ int main() {
 		} */
 
 
-		if (getLocation(rows, columns) == 'c') {
+		if (getLocation(rows, columns) == 'c') { //Temp end goal of the game. Stops game
 			movecursor(ROWS + 2, 0);
 			cout << "Completed Test\n";
 			usleep(2'000'000);
