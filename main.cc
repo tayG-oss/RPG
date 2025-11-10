@@ -290,16 +290,13 @@ int main() {
 
 	result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
 
+	// Puzzle #1:
 	cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
 
 	int count = 0;
 
-	/*
-	   No clue if an attempt limit will be added in future development, only added here for testing purposes
 
-
-	*/
-
+	//  No clue if an attempt limit will be added in future development, only added here for testing
 	while (count != 3) {
 		cout << "Enter answer: ";
 		cin >> answer;
@@ -363,4 +360,18 @@ int main() {
 			cout << "HP: " << firstBoss.getHealth() << endl;
 		}
 	}
+	// puzzle 2:
+	int start = 1;
+	int end = 30;
+	int attempts = 0;
+	string fb;
+
+	cout << "FizzBuzz again. Attempt the sequence as you go from " << start << " to " << end << endl;
+	while (attempts !=5) {
+		cin >> fb;
+		if (
+
+
+	// puzzle 3:
+
 }
