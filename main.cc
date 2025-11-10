@@ -134,13 +134,13 @@ void OnDeath() {
 }
 
 //Attack system.. not sure how to work with this yet.
-void OnAttack(int attDamage, const int& other) {
+/*void OnAttack(int attDamage, const int& other) {
 
 	if (attDamage > 0) {
 		curHealth = curHealth - attDamage;
 	}
 
-}
+}*/
 
 
 vector<string> worldMap = {
@@ -200,7 +200,7 @@ int main() {
 	int choice = 0; //User input choice
 	int wall = 0; // Might get rid of later idk
 	bool battle = false;
-	
+
 	set_raw_mode(true);
 	show_cursor(false);
 
@@ -232,9 +232,10 @@ int main() {
 			movecursor(2, COLUMNS + 5);
 			cout << "That's a wall\n";
 		} else if (getLocation(rows, columns) == '*') {
-            movecursor(2, COLUMNS + 5);
-            cout << "You may not enter this area yet. Please [insert action]\n";
-        }
+			movecursor(2, COLUMNS + 5);
+			cout << "You may not enter this area yet. Please [insert action]\n";
+			rows++;
+		}
 		/*if (wall == 20) {
 			cout << "You have been determined to be drunk, and therefore cannot defeat the princess\n";
 			cout << "Please sober up before proceeding\n";
