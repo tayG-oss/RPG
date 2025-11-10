@@ -50,8 +50,8 @@ void printMap(size_t playRow, size_t playColumn) {
 	for (size_t i = 0; i < worldMap.size(); i++) { // rows
 		for (size_t j = 0; j < worldMap.at(i).size(); j++) { // columns
 			if (i == playRow and j == playColumn)
-				cout << "G";
-			else cout << worldMap.at(i).at(j);
+				cout << GREEN << "G";
+			else cout << WHITE << worldMap.at(i).at(j);
 		}
 		cout << endl;
 	}
@@ -91,28 +91,30 @@ int main() {
 		if (getLocation(rows, columns) == 'e') {
 			setLocation(rows, columns, ' ');
 			movecursor(2, COLUMNS + 5);
-			cout << "ENEMY ENCOUNTERED\n";
+			cout << BOLDRED << "ENEMY ENCOUNTERED\n";
 			battle = true;
 		}
 
 		//Dumb wall easter egg, don't worry about it
-		/*	if (getLocation(rows, columns) == '-' or getLocation(rows, columns) == '|') {
-				movecursor(ROWS + 2, 0);
-				if (wall == 20) {
-					cout << "You have been determined to be drunk, and therefore cannot defeat the princess\n";
-					cout << "Please sober up before proceeding\n";
-					break;
-				} else if (wall <= 5 or wall >= 11) {
-					cout << "You have hit a wall\n";
-					wall++;
-				} else if (wall >= 6) {
-					cout << "Stop hitting the wall\n";
-					wall++;
-				} else if (wall == 10) {
-					cout << "Are you perhaps drunk?\n";
-					wall++;
-				}
-			} */
+		if (getLocation(rows, columns) == '-' or getLocation(rows, columns) == '|') {
+			movecursor(2, COLUMNS + 5);
+			cout << "That's a wall\n";
+		}
+		/*if (wall == 20) {
+			cout << "You have been determined to be drunk, and therefore cannot defeat the princess\n";
+			cout << "Please sober up before proceeding\n";
+			break;
+		} else if (wall <= 5 or wall >= 11) {
+			cout << "You have hit a wall\n";
+			wall++;
+		} else if (wall >= 6) {
+			cout << "Stop hitting the wall\n";
+			wall++;
+		} else if (wall == 10) {
+			cout << "Are you perhaps drunk?\n";
+			wall++;
+		}
+		} */
 
 
 		if (getLocation(rows, columns) == 'c') {
@@ -122,17 +124,21 @@ int main() {
 			break;
 		}
 
-		if (battle == true) {
+		while (battle == true) {
 			movecursor(3, COLUMNS + 5);
-			cout << "What would you like to do?\n";
+			cout << WHITE << "What would you like to do?\n";
 			movecursor(4, COLUMNS + 5);
-			cout << "1) Attack " << " 2) Dodge\n";
+			cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
 			cin >> choice;
+
 			movecursor(5, COLUMNS + 5);
-			if (choice == 1)
-				cout << "You chose to attack!" << endl;
-			if (choice == 2)
-				cout << "You chose to dodge!" << endl;
+			if (choice == 1) {
+				cout << WHITE << "You chose to attack!" << endl;
+			}
+			if (choice == 2) {
+				cout << WHITE << "You chose to dodge!" << endl;
+			}
+
 			battle = false;
 		}
 
