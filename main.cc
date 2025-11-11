@@ -134,13 +134,13 @@ void OnDeath() {
 }
 
 //Attack system.. not sure how to work with this yet.
-void OnAttack(int attDamage, const int& other) {
+/* void OnAttack(int attDamage, const int& other) {
 
 	if (attDamage > 0) {
 		curHealth = curHealth - attDamage;
 	}
 
-}
+} */
 
 
 vector<string> worldMap = {
@@ -364,14 +364,59 @@ int main() {
 	int start = 1;
 	int end = 30;
 	int attempts = 0;
-	string fb;
+	int max_attempts = 5;
+	int mistake = 0;
 
-	cout << "FizzBuzz again. Attempt the sequence as you go from " << start << " to " << end << endl;
-	while (attempts !=5) {
-		cin >> fb;
-		if (
+	vector<string> sequence(30);
+
+	for (int i = start; i <= end; i++) {
+		if (i % 15 == 0) {
+			sequence.at(i - 1) = "fizzbuzz";
+		} else if (i % 14 == 0) {
+			sequence.at(i - 1) = "3x + 2 = 44";
+		} else if (i % 13 == 0) {
+			sequence.at(i - 1) = "deurtuahtiang";
+		} else if (i % 11 == 0) {
+			sequence.at(i - 1) = "uh-lehvuhntean";
+		} else if (i % 5 == 0) {
+			sequence.at(i - 1) = "buzz";
+		} else if (i % 3 == 0) {
+			sequence.at(i - 1) = "fizz";
+		} else {
+			sequence.at(i - 1) = to_string(i);
+		}
+	}
+
+	cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
+	cout << "New Ruels: " << endl;
+	cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
+	cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
+	cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
+	cout << "good luck :)" << endl;
+	cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
+
+	while (attempts < max_attempts) {
+		for (int i = 0; i < sequence.size(); i++) {
+			string fb;
+			getline(cin, fb);
+			if (fb != sequence.at(i)) {
+				mistake++;
+			}
+		}
+
+		if (mistake == 0) {
+			cout << "Congrats, you did it!" << endl;
+			return 0;
+		} else {
+			attempts++;
+		}
+		if (attempts < max_attempts) {
+			cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
+		} else {
+			cout << "You failed the sequence :(...womp womp" << endl;
+		}
+	}
 
 
-	// puzzle 3:
 
 }
