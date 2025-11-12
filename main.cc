@@ -291,20 +291,24 @@ int main() {
 			setLocation(rows, columns, ' ');
 			movecursor(2, COLUMNS + 5);
 			cout << BOLDRED << "You encountered a human villager! They want to fight!\n";
-			battle = true;
+			//battle = true;
 		}
 
 		if (getLocation(rows, columns) == 'g') { //Goblin encounter
-			setLocation(rows, columns, ' ');
 			movecursor(2, COLUMNS + 5);
-			cout << BOLDGREEN << "Goblin Villager:\n";
-			movecursor(3, COLUMNS + 5);
-			cout << WHITE << "Please help save the dragon!\n";
+			if (rows == 34 and columns == 15) {
+				cout << BOLDGREEN << "GOBLIN VILLAGER:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Please help save the dragon!\n";
+			} else if (rows == 30 and columns == 25) {
+				cout << BOLDGREEN  << "ANOTHER GOBLIN VILLAGER:\n";
+
+			}
 		}
 
 		if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
+			movecursor(2, COLUMNS + 5);
 			if (rows == 37 and columns == 20) {
-				movecursor(2, COLUMNS + 5);
 				cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
@@ -312,13 +316,11 @@ int main() {
 				cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
 				completedTask = 1;
 			} else if (rows == 25 and columns == 23) {
-				movecursor(2, COLUMNS + 5);
 				cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
 				movecursor(4, COLUMNS + 5);
 				cout << WHITE << "I'm not smart enough to unlock it though.\n";
-
 			}
 		}
 
