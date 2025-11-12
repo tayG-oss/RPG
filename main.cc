@@ -144,25 +144,46 @@ void OnDeath() {
 
 
 vector<string> worldMap = {
-	"-----------------------------------------",
-	"|    c                                  |",
-	"|                               e       |",
+	"             ---------------             ",
+	"            |               |            ",
+	"            |       D       |            ", //Captured Dragon, game ends when dragon is saved!
+	"            |               |            ",
+	"         |--------*****--------|         ",
+	"         |                     |         ",
+	"         |          P          |         ", //Princess Boss Fight
+	"         |                     |         ",
+	"|-----------------*****-----------------|",
 	"|                                       |",
 	"|                                       |",
-	"|***************************************|",
-	"|                                       |",
-	"|  e                                    |",
+	"|                   H                   |", //Hero Boss Fight, 2 puzzles
 	"|                                       |",
 	"|                                       |",
+	"|-----------------*****-----------------|",
 	"|                                       |",
 	"|                                       |",
 	"|                                       |",
-	"|                                 e     |",
-	"|          |-----------------------------",
-	"|          |                             ",
-	"|     e    |                             ",
-	"|          |                             ",
-	"------------                             ",
+	"|                                       |",
+	"|                                       |", //Basic enemies, 2 puzzles
+	"|                                       |",
+	"|                                       |",
+	"|                                       |",
+	"|                                       |",
+	"|-----------------*****-----------------|",
+	"|                                       |",
+	"|                                       |", //Tutorial Puzzle, tutorial battle(?), ~Start of adventure~
+	"|                                       |",
+	"|                                       |",
+	"|                                       |",
+	"|                                       |",
+	"|                                       |",
+	"|                                       |",
+	"|                                       |",
+	"|                                       |",
+	"|-----------------     -----------------|",
+	"                 |     |                 ",
+	"                 |     |                 ", //Player Start point
+	"                 |     |                 ",
+	"                 -------                 ",
 };
 
 char getLocation(size_t row, size_t column) {
@@ -195,7 +216,7 @@ void printMap(size_t playRow, size_t playColumn) {
 int main() {
 	const int ROWS = worldMap.size();
 	const int COLUMNS = worldMap.at(0).size();
-	int rows = ROWS / 2, columns = COLUMNS / 2;
+	int rows = 38, columns = 20;
 	int prevRow = -1, prevCol = -1; //previous positions
 	int choice = 0; //User input choice
 	int wall = 0; // Might get rid of later idk
@@ -217,6 +238,7 @@ int main() {
 			prevCol = columns;
 			movecursor(2, COLUMNS + 5);
 			movecursor(ROWS + 2, 0);
+			cout << YELLOW << "ROW: " << rows << RED << " COL: " << columns << RESET; //Temporaru line
 			cout.flush();
 		}
 
@@ -227,30 +249,18 @@ int main() {
 			battle = true;
 		}
 
-		//Dumb wall easter egg, don't worry about it
-		if (getLocation(rows, columns) == '-' or getLocation(rows, columns) == '|') {
-			movecursor(2, COLUMNS + 5);
-			cout << "That's a wall\n";
+		//Wall barriers and gates
+		if (getLocation(rows, columns) == '-') {
+			if (rows == 0) rows++;
+
+			//	} else if (getLocation(rows, columns) == '|') {
+			//		if (columns == 40) columns--;
 		} else if (getLocation(rows, columns) == '*') {
 			movecursor(2, COLUMNS + 5);
-			cout << "You may not enter this area yet. Please [insert action]\n";
 			rows++;
+			cout << "You may not enter this area yet. Please [insert action]\n";
+			usleep(1'000'000);
 		}
-		/*if (wall == 20) {
-			cout << "You have been determined to be drunk, and therefore cannot defeat the princess\n";
-			cout << "Please sober up before proceeding\n";
-			break;
-		} else if (wall <= 5 or wall >= 11) {
-			cout << "You have hit a wall\n";
-			wall++;
-		} else if (wall >= 6) {
-			cout << "Stop hitting the wall\n";
-			wall++;
-		} else if (wall == 10) {
-			cout << "Are you perhaps drunk?\n";
-			wall++;
-		}
-		} */
 
 
 		if (getLocation(rows, columns) == 'c') { //Temp end goal of the game. Stops game
