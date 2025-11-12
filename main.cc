@@ -406,7 +406,7 @@ int main() {
 
 		if (mistake == 0) {
 			cout << "Congrats, you did it!" << endl;
-			return 0;
+			break;
 		} else {
 			attempts++;
 		}
@@ -417,6 +417,80 @@ int main() {
 		}
 	}
 
+	// puzzle 3:
+	string word1 = "cabbage";
+	string w1;
+	string word2 = "abbreviation";
+	string w2;
+	string word3 = "discombobulated";
+	string w3;
+	string word4 = "deinstitutionalisation";
+	string w4;
+	int mistakes = 0;
 
+	cout << "Four words to unscramble...Good luck" << endl;
+
+	cout << "Unscramble aeagbcb" << endl;
+
+	while (true) {
+		cin >> w1;
+		for (char &c : w1) c = tolower(c);
+
+		if (w1 == word1) {
+			cout << "Good job, next word" << endl;
+			break;
+		} else {
+			mistakes++;
+		}
+	}
+
+	cout << "Unscramble nrvbeiiaobat" << endl;
+
+	while (true) {
+		cin >> w2;
+		for (char &c : w2) c = tolower(c);
+
+		if (w2 == word2) {
+			cout << "Good job, next word" << endl;
+			break;
+		} else {
+			mistakes++;
+		}
+	}
+
+	cout << "Unscramble toaoddbibesmcul" << endl;
+
+	while (true) {
+		cin >> w3;
+		for (char &c : w3) c = tolower(c);
+
+		if (w3 == word3) {
+			cout << "Good job, next word" << endl;
+			break;
+		} else {
+			mistakes++;
+		}
+	}
+
+	cout << "Unscramble ztonniiiotiseuditalant" << endl;
+
+	while (true) {
+		cin >> w4;
+		for (char &c : w4) c = tolower(c);
+
+		if (w4 == word4) {
+			cout << "Good job, next word" << endl;
+			break;
+		} else {
+			mistakes++;
+		}
+	}
+	if (mistakes == 0) {
+		cout << "Hooray no mistakes :DD" << endl;
+	} else if (mistakes == 1) {
+		cout << "You made one mistake :)" << endl;
+	} else {
+		cout << "You made " << mistakes << " mistakes ;(" << endl;
+	}
 
 }
