@@ -15,4 +15,4 @@ Loop: In puzzles 2 and 3, while loops are used to reiterate certain parts of cod
 
 
 
-Functions: In puzzle 1, two functions are being used. The first function is the equation to integrate. The second function is the integration that used leftside Riemann Sum to calculate the first function. Also, three different functions are used to setup the world map and to move around in it.
+Functions In puzzle 1, two functions are being used. The first function is the equation to integrate. The second function is the integration that used leftside Riemann Sum to calculate the first function. Also, three different functions are used to setup the world map and to move around in it.

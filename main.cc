@@ -359,7 +359,7 @@ int main() {
 			cout << "Attack Damage: " << firstBoss.getAttDamage() << endl;
 			cout << "HP: " << firstBoss.getHealth() << endl;
 		}
-	}
+	}/*
 	// puzzle 2:
 	int start = 1;
 	int end = 30;
@@ -491,6 +491,6 @@ int main() {
 		cout << "You made one mistake :)" << endl;
 	} else {
 		cout << "You made " << mistakes << " mistakes ;(" << endl;
-	}
+	}*/
 
 }
