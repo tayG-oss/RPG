@@ -155,46 +155,37 @@ vector<string> worldMap = {
 	"|-----------------*****-----------------|",
 	"|                L     L                |",
 	"|                                       |",
-	"|              V    H    V              |", //Hero Boss Fight, 2 puzzles
+	"|              V    H    V       g      |", //Hero Boss Fight, 2 puzzles
 	"|                                       |", // Stage 3
-	"|                                       |",
+	"| g                                    c|",
 	"|-----------------*****-----------------|",
 	"|                   V               L   |",
-	"|    V                                  |",
-	"|                                       |",
+	"|    V      g                           |",
+	"|                                     g |",
 	"|                             V         |",
-	"|                                       |", //Basic enemies, 2 puzzles
+	"|                    g                  |", //Basic enemies, 2 puzzles
 	"|          V                            |", // Stage 2
+	"|                            g          |",
 	"|                                       |",
-	"|                                       |",
-	"| L                                V    |",
+	"| L q                              V    |",
 	"|-----------------*****-----------------|",
-	"|                                       |",
+	"| g                    q                |",
 	"|                              L        |", //Tutorial Puzzle, tutorial battle(?), ~Start of adventure~
 	"|          V                            |", // Stage 1
 	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|   V                                   |",
+	"|                                    g  |", //SYMBOL LEGEND
+	"|                        g              |",  // D - Dragon, P - Princess, H - Hero
+	"|                                       |",  // V - Human Villagers, c - cat:D, g - Goblin Friends
+	"|   V                                   |",  // L - Gate Lock, ḡ - Guide Goblins
 	"|                                 V     |",
-	"|c                                      |",
+	"|c             g                        |",
 	"|-----------------*****-----------------|",
 	"                 |     |                 ",
-	"                 |  o  |                 ", //Player Start point (Stage 0)
+	"                 |  q  |                 ", //Player Start point (Stage 0)
 	"                 |     |                 ",
 	"                 -------                 ",
 };
-/* SYMBOL LEGEND
-	D - Dragon
-	P - Princess
-	H - Hero
-	V - Human Villagers
-	L - Gate Lock
-	c - cat :D
-	g - Goblin friends
-	o - concerned individual
-*/
+
 
 char getLocation(size_t row, size_t column) {
 	if (row >= worldMap.size()) return ' ';
@@ -272,14 +263,14 @@ int main() {
 		} else if (getLocation(rows, columns) == '*') { //Gates
 			if (completedTask == 1 && stage == 0) {
 				movecursor(2, COLUMNS + 5);
-				cout << "The gate has been unlocked\n";
+				cout << "The gate has been unlocked.\n";
 				for (int i = 0; i < 5; i++) setLocation(35, i + 18, ' ');
 				completedTask = 0;
 				stage = 1;
 			} else {
 				rows++;
 				movecursor(2, COLUMNS + 5);
-				cout << "You may not enter this area yet. Please [insert action]\n";
+				cout << "You cannot enter this area yet, the gate is locked.\n";
 				usleep(1'000'000);
 			}
 		}
@@ -305,21 +296,59 @@ int main() {
 
 		if (getLocation(rows, columns) == 'g') { //Goblin encounter
 			setLocation(rows, columns, ' ');
+			movecursor(2, COLUMNS + 5);
 			cout << BOLDGREEN << "Goblin Villager:\n";
 			movecursor(3, COLUMNS + 5);
-			cout << BOLDRED << "Please help save the dragon!\n";
-			battle = true;
+			cout << WHITE << "Please help save the dragon!\n";
 		}
 
-		if (getLocation(rows, columns) == 'o') { //Guide or something (TBD)
-			movecursor(2, COLUMNS + 5);
-			cout << BOLDBLUE << "CONCERNED INDIVIDUAL:\n";
-			movecursor(3, COLUMNS + 5);
-			cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
-			movecursor(4, COLUMNS + 5);
-			cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
-			completedTask = 1;
+		if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
+			if (rows == 37 and columns == 20) {
+				movecursor(2, COLUMNS + 5);
+				cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
+				completedTask = 1;
+			} else if (rows == 25 and columns == 23) {
+				movecursor(2, COLUMNS + 5);
+				cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "I'm not smart enough to unlock it though.\n";
+
+			}
 		}
+
+		if (getLocation(rows, columns) == 'c') {
+			if (rows == 34 and columns == 1) {
+				movecursor(2, COLUMNS + 5);
+				cout << BOLDRED << "SUSPICIOUS CAT:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "You should totally trust me when I say that there's a luck system./n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Anyways, you're luck has mysteriously gone down./n";
+			}
+
+
+		}
+
+		/*
+		if (getLocation(rows, columns) == 'L') { //Puzzle Lock
+
+		}
+
+		if (getLocation(rows, columns) == 'H') { //Hero encounter
+
+		}
+
+		if (getLocation(rows, columns) == 'P') { // Princess encounter
+
+		}
+
+		*/
 
 		while (battle == true) {
 			movecursor(3, COLUMNS + 5);
