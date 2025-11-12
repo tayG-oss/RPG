@@ -1,6 +1,6 @@
 //Fill out this comment with your names and which bullet points you did
-//Partners:
-//Bullet Points:
+//Partners: Je-heon Oh, giulls, Dom
+//Bullet Points: 1,2,3,4,5
 //Extra Credit:
 //URL to cover art and music:
 #include "/public/read.h"
@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <numeric>
 #include <cmath>
+#include <cstdlib>
 using namespace std;
 //Puzzle 1 functions
 double f(double x) {
@@ -38,12 +39,12 @@ class Bosses {
 	//basic stats for miniboss
   private:
 	int maxHealth;
-	int curHealth;
-	int ATTDamage;
 	string Name;
 //	int damageTaken; not sure if this is necessary
 	//initialization
   public:
+	int ATTDamage;
+	int curHealth;
 	int getHealth() const;
 	string getName() const;
 	int getAttDamage() const;
@@ -70,13 +71,13 @@ class playerCharacter {
 	//basic stats for main character
   private:
 	int maxHealth;
-	int curHealth;
-	int attDamage;
 	string name;
 
 //	int damageTaken;
 	//initialization
   public:
+	int curHealth;
+	int attDamage;
 	string getName() const;
 	int getAttDamage() const;
 	int getHealth() const;
@@ -134,13 +135,20 @@ void OnDeath() {
 }
 
 //Attack system.. not sure how to work with this yet.
-/*void OnAttack(int attDamage, const int& other) {
+int operator- (Bosses& bos, playerCharacter& pla) {
+	bos.curHealth -= pla.attDamage;
+	return bos.curHealth;
+}
 
-	if (attDamage > 0) {
-		curHealth = curHealth - attDamage;
-	}
+int operator+ (Bosses& boss, playerCharacter& play) {
 
-}*/
+	play.curHealth -= boss.ATTDamage;
+
+	return play.curHealth;
+
+}
+
+//Attack system.. not sure how to work with this yet.
 
 
 vector<string> worldMap = {
@@ -214,8 +222,32 @@ void printMap(size_t playRow, size_t playColumn) {
 }
 
 int main() {
+
+	int userhealth, userAtt;
+	string userName;
+
+	Bosses firstBoss;
+
+	cout << "Character stats" << endl;
+	//Declare playercharacter class
+	playerCharacter Mario;
+
+	cout << "What's your name" << endl;
+	cin >> userName;
+	Mario.setName(userName);
+
+	cout << "Attack Damage" << endl;
+	cin >> userAtt;
+	Mario.setAttDamage(userAtt);
+
+	cout << "HP" << endl;
+	cin >> userhealth;
+	Mario.setHealth(userhealth);
+
+	bool battle = false;
 	const int ROWS = worldMap.size();
 	const int COLUMNS = worldMap.at(0).size();
+
 	int rows = 38, columns = 20;
 	int prevRow = -1, prevCol = -1; //previous positions for printing map
 	int barRow = 0, barCol = 0; //previous positions for barriers
@@ -224,8 +256,8 @@ int main() {
 	int completedTask = 0;
 	bool battle = false; //Battle mode
 	bool stageClear = false; //Whether or not the player has meet the requirements to move on
-
-	set_raw_mode(true);
+	
+  set_raw_mode(true);
 	show_cursor(false);
 
 	while (true) {
@@ -294,16 +326,6 @@ int main() {
 			//battle = true;
 		}
 
-		if (getLocation(rows, columns) == 'g') { //Goblin encounter
-			movecursor(2, COLUMNS + 5);
-			if (rows == 34 and columns == 15) {
-				cout << BOLDGREEN << "GOBLIN VILLAGER:\n";
-				movecursor(3, COLUMNS + 5);
-				cout << WHITE << "Please help save the dragon!\n";
-			} else if (rows == 30 and columns == 25) {
-				cout << BOLDGREEN  << "ANOTHER GOBLIN VILLAGER:\n";
-
-			}
 		}
 
 		if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
@@ -353,25 +375,39 @@ int main() {
 		*/
 
 		while (battle == true) {
-			movecursor(3, COLUMNS + 5);
+			int choice = 0;
+			int loc = 3;
+			movecursor(loc, COLUMNS + 5);
+			loc++;
 			cout << WHITE << "What would you like to do?\n";
-			movecursor(4, COLUMNS + 5);
+			movecursor(loc, COLUMNS + 5);
+			loc++;
 			cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
 			cin >> choice;
-
-			movecursor(5, COLUMNS + 5);
 			if (choice == 1) {
+				movecursor(loc, COLUMNS + 5);
+				loc++;
 				cout << WHITE << "You chose to attack!" << endl;
-			}
-			if (choice == 2) {
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << "Boss HP: " << firstBoss - Mario << endl;
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << firstBoss.getName() << " Attacked you!\n";
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << "Your HP: " << firstBoss + Mario << endl;
+			} else if (choice == 2) {
+				movecursor(loc, COLUMNS + 5);
+				loc++;
 				cout << WHITE << "You chose to dodge!" << endl;
 			}
-
-			battle = false;
 		}
 
+	} // while }
 
-	}
+
+
 	set_raw_mode(false);
 	show_cursor(true);
 	movecursor(0, 0);
@@ -390,11 +426,11 @@ int main() {
 
 	int count = 0;
 
-	/*
-	   No clue if an attempt limit will be added in future development, only added here for testing purposes
+
+//	No clue if an attempt limit will be added in future development, only added here for testing purposes
 
 
-	*/
+
 
 	while (count != 3) {
 		cout << "Enter answer: ";
@@ -413,50 +449,5 @@ int main() {
 		cout << "You failed, try again" << endl;
 	}
 
-	int userhealth, userAtt;
-	string userName;
-	bool isCombat = true;
 
-	Bosses firstBoss;
-
-	cout << "Character stats" << endl;
-//Declare playercharacter class
-	playerCharacter Mario;
-
-	cout << "What's your name" << endl;
-	cin >> userName;
-	Mario.setName(userName);
-
-	cout << "Attack Damage" << endl;
-	cin >> userAtt;
-	Mario.setAttDamage(userAtt);
-
-	cout << "HP" << endl;
-	cin >> userhealth;
-	Mario.setHealth(userhealth);
-
-//Combat System
-	while (isCombat) {
-		int i = 0;
-		cout << "1. Attack\n";
-		cout << "2. Dodge\n";
-		cout << "3. My Stats\n";
-		cout << "4. Enemy Stats\n";
-		cout << "-1 to run away\n";
-		cin >> i;
-
-		if (i == -1) {
-			isCombat = false;
-		}/* else if (i == 1) {
-			OnAttack(Mario.getAttDamage(), firstBoss.getHealth());
-		}*/ else if (i == 3) {
-			cout << "Name: " << Mario.getName() << endl;
-			cout << "Attack Damage: " << Mario.getAttDamage() << endl;
-			cout << "HP: " << Mario.getHealth() << endl;
-		} else if (i == 4) {
-			cout << "Name: " << firstBoss.getName() << endl;
-			cout << "Attack Damage: " << firstBoss.getAttDamage() << endl;
-			cout << "HP: " << firstBoss.getHealth() << endl;
-		}
-	}
 }
