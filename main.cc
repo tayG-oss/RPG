@@ -150,41 +150,51 @@ vector<string> worldMap = {
 	"            |               |            ",
 	"         |--------*****--------|         ",
 	"         |                     |         ",
-	"         |          P          |         ", //Princess Boss Fight
-	"         |                     |         ",
+	"         |          P          |         ", //Princess Boss Fight (
+	"         |                     |         ", // Stage 4 (Final)
 	"|-----------------*****-----------------|",
+	"|                L     L                |",
 	"|                                       |",
-	"|                                       |",
-	"|                   H                   |", //Hero Boss Fight, 2 puzzles
-	"|                                       |",
+	"|              V    H    V              |", //Hero Boss Fight, 2 puzzles
+	"|                                       |", // Stage 3
 	"|                                       |",
 	"|-----------------*****-----------------|",
+	"|                   V               L   |",
+	"|    V                                  |",
 	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                       |",
+	"|                             V         |",
 	"|                                       |", //Basic enemies, 2 puzzles
+	"|          V                            |", // Stage 2
 	"|                                       |",
 	"|                                       |",
-	"|                                       |",
-	"|                                       |",
+	"| L                                V    |",
 	"|-----------------*****-----------------|",
 	"|                                       |",
-	"|                                       |", //Tutorial Puzzle, tutorial battle(?), ~Start of adventure~
+	"|                              L        |", //Tutorial Puzzle, tutorial battle(?), ~Start of adventure~
+	"|          V                            |", // Stage 1
 	"|                                       |",
 	"|                                       |",
 	"|                                       |",
 	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|-----------------     -----------------|",
+	"|   V                                   |",
+	"|                                 V     |",
+	"|c                                      |",
+	"|-----------------*****-----------------|",
 	"                 |     |                 ",
-	"                 |     |                 ", //Player Start point
+	"                 |  o  |                 ", //Player Start point (Stage 0)
 	"                 |     |                 ",
 	"                 -------                 ",
 };
+/* SYMBOL LEGEND
+	D - Dragon
+	P - Princess
+	H - Hero
+	V - Human Villagers
+	L - Gate Lock
+	c - cat :D
+	g - Goblin friends
+	o - concerned individual
+*/
 
 char getLocation(size_t row, size_t column) {
 	if (row >= worldMap.size()) return ' ';
@@ -212,62 +222,103 @@ void printMap(size_t playRow, size_t playColumn) {
 
 }
 
-
 int main() {
 	const int ROWS = worldMap.size();
 	const int COLUMNS = worldMap.at(0).size();
 	int rows = 38, columns = 20;
-	int prevRow = -1, prevCol = -1; //previous positions
+	int prevRow = -1, prevCol = -1; //previous positions for printing map
+	int barRow = 0, barCol = 0; //previous positions for barriers
 	int choice = 0; //User input choice
-	int wall = 0; // Might get rid of later idk
-	bool battle = false;
+	int stage = 0; // Player is on current stage
+	int completedTask = 0;
+	bool battle = false; //Battle mode
+	bool stageClear = false; //Whether or not the player has meet the requirements to move on
 
 	set_raw_mode(true);
 	show_cursor(false);
 
 	while (true) {
 		int c = toupper(quick_read());
+		barRow = rows;
+		barCol = columns;
 		if (c == 'W' or c == UP_ARROW) rows--;
 		if (c == 'S' or c == DOWN_ARROW) rows++;
 		if (c == 'A' or c == LEFT_ARROW) columns--;
 		if (c == 'D' or c == RIGHT_ARROW) columns++;
-
 		if (!(rows == prevRow and columns == prevCol)) {
 			printMap(rows, columns);
 			prevRow = rows;
 			prevCol = columns;
-			movecursor(2, COLUMNS + 5);
 			movecursor(ROWS + 2, 0);
-			cout << YELLOW << "ROW: " << rows << RED << " COL: " << columns << RESET; //Temporaru line
+			cout << YELLOW << "ROW: " << rows << RED << " COL: " << columns << RESET; //Temporary line for positions
+			cout << YELLOW << " PREVROW: " << barRow << RED << " PREVCOL: " << barCol << RESET; //Temporary line for positions
+			movecursor(ROWS + 3, 0);
+			cout << YELLOW << "STAGE: " << stage << RED << " Tasks completed: " << completedTask << RESET; //Temporary line for positions
 			cout.flush();
 		}
 
-		if (getLocation(rows, columns) == 'e') { //Enemy encounter
+		//WALL BARRIERS AND GATES
+		if (getLocation(rows, columns) == '-') { //Bottoms and tops
+			if (rows == 0) rows++;
+			else if (rows == 35 or rows == 39) rows--;
+			else if (rows == 4 or rows == 8 or rows == 14 or rows == 24) {
+				if (barRow == rows - 1) rows--;
+				else if (barRow == rows + 1) rows++;
+			}
+		} else if (getLocation(rows, columns) == '|') { //Side walls
+			if (columns == 0  or columns == 9 or columns == 12 or columns == 17) columns++;
+			else if (columns == 23 or columns == 28 or columns == 31 or columns == 40) columns--;
+
+		} else if (getLocation(rows, columns) == '*') { //Gates
+			if (completedTask == 1 && stage == 0) {
+				movecursor(2, COLUMNS + 5);
+				cout << "The gate has been unlocked\n";
+				for (int i = 0; i < 5; i++) setLocation(35, i + 18, ' ');
+				completedTask = 0;
+				stage = 1;
+			} else {
+				rows++;
+				movecursor(2, COLUMNS + 5);
+				cout << "You may not enter this area yet. Please [insert action]\n";
+				usleep(1'000'000);
+			}
+		}
+
+		//CHARACTERS AND OBJECTS
+		if (getLocation(rows, columns) == 'D') { //End goal/Dragon is saved
+			movecursor(2, COLUMNS + 5);
+			cout << "Congratulations!!! You've saved the dragon from the evil princess!\n";
+			movecursor(3, COLUMNS + 5);
+			cout << "The dragon gives you a ride back to your small town village\n and you lived happily ever after!\n";
+			movecursor(4, COLUMNS + 5);
+			cout << BOLDWHITE << "Thank you for playing our game!\n";
+			usleep(5'000'000);
+			break;
+		}
+
+		if (getLocation(rows, columns) == 'V') { //Enemy encounter
 			setLocation(rows, columns, ' ');
 			movecursor(2, COLUMNS + 5);
-			cout << BOLDRED << "ENEMY ENCOUNTERED\n";
+			cout << BOLDRED << "You encountered a human villager! They want to fight!\n";
 			battle = true;
 		}
 
-		//Wall barriers and gates
-		if (getLocation(rows, columns) == '-') {
-			if (rows == 0) rows++;
-
-			//	} else if (getLocation(rows, columns) == '|') {
-			//		if (columns == 40) columns--;
-		} else if (getLocation(rows, columns) == '*') {
-			movecursor(2, COLUMNS + 5);
-			rows++;
-			cout << "You may not enter this area yet. Please [insert action]\n";
-			usleep(1'000'000);
+		if (getLocation(rows, columns) == 'g') { //Goblin encounter
+			setLocation(rows, columns, ' ');
+			cout << BOLDGREEN << "Goblin Villager:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << BOLDRED << "Please help save the dragon!\n";
+			battle = true;
 		}
 
-
-		if (getLocation(rows, columns) == 'c') { //Temp end goal of the game. Stops game
-			movecursor(ROWS + 2, 0);
-			cout << "Completed Test\n";
-			usleep(2'000'000);
-			break;
+		if (getLocation(rows, columns) == 'o') { //Guide or something (TBD)
+			movecursor(2, COLUMNS + 5);
+			cout << BOLDBLUE << "CONCERNED INDIVIDUAL:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
+			completedTask = 1;
 		}
 
 		while (battle == true) {
@@ -338,7 +389,7 @@ int main() {
 	Bosses firstBoss;
 
 	cout << "Character stats" << endl;
-	//Declare playercharacter class
+//Declare playercharacter class
 	playerCharacter Mario;
 
 	cout << "What's your name" << endl;
@@ -353,7 +404,7 @@ int main() {
 	cin >> userhealth;
 	Mario.setHealth(userhealth);
 
-	//Combat System
+//Combat System
 	while (isCombat) {
 		int i = 0;
 		cout << "1. Attack\n";
