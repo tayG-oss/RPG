@@ -1,6 +1,6 @@
 //Fill out this comment with your names and which bullet points you did
-//Partners:
-//Bullet Points:
+//Partners: Je-heon Oh, giulls, Dom
+//Bullet Points: 1,2,3,4,5
 //Extra Credit:
 //URL to cover art and music:
 #include "/public/read.h"
@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <numeric>
 #include <cmath>
+#include <cstdlib>
 using namespace std;
 //Puzzle 1 functions
 double f(double x) {
@@ -38,12 +39,12 @@ class Bosses {
 	//basic stats for miniboss
   private:
 	int maxHealth;
-	int curHealth;
-	int ATTDamage;
 	string Name;
 //	int damageTaken; not sure if this is necessary
 	//initialization
   public:
+	int ATTDamage;
+	int curHealth;
 	int getHealth() const;
 	string getName() const;
 	int getAttDamage() const;
@@ -70,13 +71,13 @@ class playerCharacter {
 	//basic stats for main character
   private:
 	int maxHealth;
-	int curHealth;
-	int attDamage;
 	string name;
 
 //	int damageTaken;
 	//initialization
   public:
+	int curHealth;
+	int attDamage;
 	string getName() const;
 	int getAttDamage() const;
 	int getHealth() const;
@@ -134,35 +135,68 @@ void OnDeath() {
 }
 
 //Attack system.. not sure how to work with this yet.
-/* void OnAttack(int attDamage, const int& other) {
 
-	if (attDamage > 0) {
-		curHealth = curHealth - attDamage;
-	}
+int operator- (Bosses& bos, playerCharacter& pla) {
+	bos.curHealth -= pla.attDamage;
+	return bos.curHealth;
+}
 
-} */
+
+
+int operator+ (Bosses& boss, playerCharacter& play) {
+
+	play.curHealth -= boss.ATTDamage;
+
+	return play.curHealth;
+
+} 
+
+//Attack system.. not sure how to work with this yet.
 
 
 vector<string> worldMap = {
-	"-----------------------------------------",
-	"|    c                                  |",
-	"|                               e       |",
+	"             ---------------             ",
+	"            |               |            ",
+	"            |       D       |            ", //Captured Dragon, game ends when dragon is saved!
+	"            |               |            ",
+	"         |--------*****--------|         ",
+	"         |                     |         ",
+	"         |          P          |         ", //Princess Boss Fight (
+	"         |                     |         ", // Stage 4 (Final)
+	"|-----------------*****-----------------|",
+	"|                L     L                |",
 	"|                                       |",
+	"|              V    H    V       g      |", //Hero Boss Fight, 2 puzzles
+	"|                                       |", // Stage 3
+	"| g                                    c|",
+	"|-----------------*****-----------------|",
+	"|                   V               L   |",
+	"|    V      g                           |",
+	"|                                     g |",
+	"|                             V         |",
+	"|                    g                  |", //Basic enemies, 2 puzzles
+	"|          V                            |", // Stage 2
+	"|                            g          |",
 	"|                                       |",
+	"| L q                              V    |",
+	"|-----------------*****-----------------|",
+	"| g                    q                |",
+	"|                              L        |", //Tutorial Puzzle, tutorial battle(?), ~Start of adventure~
+	"|          V                            |", // Stage 1
 	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                       |",
-	"|                                 e     |",
-	"|          |-----------------------------",
-	"|          |                             ",
-	"|     e    |                             ",
-	"|          |                             ",
-	"------------                             ",
+	"|                                    g  |", //SYMBOL LEGEND
+	"|                        g              |",  // D - Dragon, P - Princess, H - Hero
+	"|                                       |",  // V - Human Villagers, c - cat:D, g - Goblin Friends
+	"|   V                                   |",  // L - Gate Lock, ḡ - Guide Goblins
+	"|                                 V     |",
+	"|c             g                        |",
+	"|-----------------*****-----------------|",
+	"                 |     |                 ",
+	"                 |  q  |                 ", //Player Start point (Stage 0)
+	"                 |     |                 ",
+	"                 -------                 ",
 };
+
 
 char getLocation(size_t row, size_t column) {
 	if (row >= worldMap.size()) return ' ';
@@ -189,7 +223,6 @@ void printMap(size_t playRow, size_t playColumn) {
 	}
 
 }
-
 
 int main() {
 	const int ROWS = worldMap.size();
@@ -316,7 +349,6 @@ int main() {
 
 	int userhealth, userAtt;
 	string userName;
-	bool isCombat = true;
 
 	Bosses firstBoss;
 
@@ -336,30 +368,214 @@ int main() {
 	cin >> userhealth;
 	Mario.setHealth(userhealth);
 
-	//Combat System
-	while (isCombat) {
-		int i = 0;
-		cout << "1. Attack\n";
-		cout << "2. Dodge\n";
-		cout << "3. My Stats\n";
-		cout << "4. Enemy Stats\n";
-		cout << "-1 to run away\n";
-		cin >> i;
+	bool battle = false;
+	const int ROWS = worldMap.size();
+	const int COLUMNS = worldMap.at(0).size();
 
-		if (i == -1) {
-			isCombat = false;
-		}/* else if (i == 1) {
-			OnAttack(Mario.getAttDamage(), firstBoss.getHealth());
-		}*/ else if (i == 3) {
-			cout << "Name: " << Mario.getName() << endl;
-			cout << "Attack Damage: " << Mario.getAttDamage() << endl;
-			cout << "HP: " << Mario.getHealth() << endl;
-		} else if (i == 4) {
-			cout << "Name: " << firstBoss.getName() << endl;
-			cout << "Attack Damage: " << firstBoss.getAttDamage() << endl;
-			cout << "HP: " << firstBoss.getHealth() << endl;
+	int rows = 38, columns = 20;
+	int prevRow = -1, prevCol = -1; //previous positions for printing map
+	int barRow = 0, barCol = 0; //previous positions for barriers
+	int choice = 0; //User input choice
+	int stage = 0; // Player is on current stage
+	int completedTask = 0;
+	bool battle = false; //Battle mode
+	bool stageClear = false; //Whether or not the player has meet the requirements to move on
+	
+  set_raw_mode(true);
+	show_cursor(false);
+
+	while (true) {
+		int c = toupper(quick_read());
+		barRow = rows;
+		barCol = columns;
+		if (c == 'W' or c == UP_ARROW) rows--;
+		if (c == 'S' or c == DOWN_ARROW) rows++;
+		if (c == 'A' or c == LEFT_ARROW) columns--;
+		if (c == 'D' or c == RIGHT_ARROW) columns++;
+		if (!(rows == prevRow and columns == prevCol)) {
+			printMap(rows, columns);
+			prevRow = rows;
+			prevCol = columns;
+			movecursor(ROWS + 2, 0);
+			cout << YELLOW << "ROW: " << rows << RED << " COL: " << columns << RESET; //Temporary line for positions
+			cout << YELLOW << " PREVROW: " << barRow << RED << " PREVCOL: " << barCol << RESET; //Temporary line for positions
+			movecursor(ROWS + 3, 0);
+			cout << YELLOW << "STAGE: " << stage << RED << " Tasks completed: " << completedTask << RESET; //Temporary line for positions
+			cout.flush();
 		}
-	}/*
+
+
+		//WALL BARRIERS AND GATES
+		if (getLocation(rows, columns) == '-') { //Bottoms and tops
+			if (rows == 0) rows++;
+			else if (rows == 35 or rows == 39) rows--;
+			else if (rows == 4 or rows == 8 or rows == 14 or rows == 24) {
+				if (barRow == rows - 1) rows--;
+				else if (barRow == rows + 1) rows++;
+			}
+		} else if (getLocation(rows, columns) == '|') { //Side walls
+			if (columns == 0  or columns == 9 or columns == 12 or columns == 17) columns++;
+			else if (columns == 23 or columns == 28 or columns == 31 or columns == 40) columns--;
+
+		} else if (getLocation(rows, columns) == '*') { //Gates
+			if (completedTask == 1 && stage == 0) {
+				movecursor(2, COLUMNS + 5);
+				cout << "The gate has been unlocked.\n";
+				for (int i = 0; i < 5; i++) setLocation(35, i + 18, ' ');
+				completedTask = 0;
+				stage = 1;
+			} else {
+				rows++;
+				movecursor(2, COLUMNS + 5);
+				cout << "You cannot enter this area yet, the gate is locked.\n";
+				usleep(1'000'000);
+			}
+		}
+
+		//CHARACTERS AND OBJECTS
+		if (getLocation(rows, columns) == 'D') { //End goal/Dragon is saved
+			movecursor(2, COLUMNS + 5);
+			cout << "Congratulations!!! You've saved the dragon from the evil princess!\n";
+			movecursor(3, COLUMNS + 5);
+			cout << "The dragon gives you a ride back to your small town village\n and you lived happily ever after!\n";
+			movecursor(4, COLUMNS + 5);
+			cout << BOLDWHITE << "Thank you for playing our game!\n";
+			usleep(5'000'000);
+			break;
+		}
+
+		if (getLocation(rows, columns) == 'V') { //Enemy encounter
+			setLocation(rows, columns, ' ');
+			movecursor(2, COLUMNS + 5);
+			cout << BOLDRED << "You encountered a human villager! They want to fight!\n";
+			//battle = true;
+		}
+
+		}
+
+		if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
+			movecursor(2, COLUMNS + 5);
+			if (rows == 37 and columns == 20) {
+				cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
+				completedTask = 1;
+			} else if (rows == 25 and columns == 23) {
+				cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "I'm not smart enough to unlock it though.\n";
+			}
+		}
+
+		if (getLocation(rows, columns) == 'c') {
+			if (rows == 34 and columns == 1) {
+				movecursor(2, COLUMNS + 5);
+				cout << BOLDRED << "SUSPICIOUS CAT:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "You should totally trust me when I say that there's a luck system./n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Anyways, you're luck has mysteriously gone down./n";
+			}
+
+
+		}
+
+		/*
+		if (getLocation(rows, columns) == 'L') { //Puzzle Lock
+
+		}
+
+		if (getLocation(rows, columns) == 'H') { //Hero encounter
+
+		}
+
+		if (getLocation(rows, columns) == 'P') { // Princess encounter
+
+		}
+
+		*/
+
+		while (battle == true) {
+			int choice = 0;
+			int loc = 3;
+			movecursor(loc, COLUMNS + 5);
+			loc++;
+			cout << WHITE << "What would you like to do?\n";
+			movecursor(loc, COLUMNS + 5);
+			loc++;
+			cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
+			cin >> choice;
+			if (choice == 1) {
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << WHITE << "You chose to attack!" << endl;
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << "Boss HP: " << firstBoss - Mario << endl;
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << firstBoss.getName() << " Attacked you!\n";
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << "Your HP: " << firstBoss + Mario << endl;
+			} else if (choice == 2) {
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << WHITE << "You chose to dodge!" << endl;
+			}
+		}
+
+	} // while }
+
+
+
+	set_raw_mode(false);
+	show_cursor(true);
+	movecursor(0, 0);
+	clearscreen();
+
+	int lowerBound = 1;
+	int upperBound = 6;
+	int numRectangles = 5;
+	int answer = 0;
+
+	double result;
+
+	result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
+
+	cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
+
+	int count = 0;
+
+
+//	No clue if an attempt limit will be added in future development, only added here for testing purposes
+
+
+
+
+	while (count != 3) {
+		cout << "Enter answer: ";
+		cin >> answer;
+		if (result == answer) {
+			cout << "Yippee you did it :DD" << endl;
+			return 0;
+		} else {
+			cout << "womp womp :(, try again" << endl;
+		}
+
+		count++;
+	}
+
+	if (count == 3) {
+		cout << "You failed, try again" << endl;
+	}
+
+
+	}
 	// puzzle 2:
 	int start = 1;
 	int end = 30;
@@ -491,6 +707,6 @@ int main() {
 		cout << "You made one mistake :)" << endl;
 	} else {
 		cout << "You made " << mistakes << " mistakes ;(" << endl;
-	}*/
+	}
 
 }
