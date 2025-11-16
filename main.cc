@@ -33,7 +33,7 @@ double leftriemannSum(int a, int b, int numRectangles) {
 }
 
 
-
+/*
 //Class for miniboss
 class Bosses {
 	//basic stats for miniboss
@@ -134,7 +134,6 @@ void OnDeath() {
 	exit(0);
 }
 
-//Attack system.. not sure how to work with this yet.
 
 int operator- (Bosses& bos, playerCharacter& pla) {
 	bos.curHealth -= pla.attDamage;
@@ -148,10 +147,8 @@ int operator+ (Bosses& boss, playerCharacter& play) {
 	play.curHealth -= boss.ATTDamage;
 
 	return play.curHealth;
-
-} 
-
-//Attack system.. not sure how to work with this yet.
+}
+*/
 
 
 vector<string> worldMap = {
@@ -347,28 +344,28 @@ int main() {
 		cout << "You failed, try again" << endl;
 	}
 
-	int userhealth, userAtt;
-	string userName;
+	/*	int userhealth, userAtt;
+		string userName;
 
-	Bosses firstBoss;
+		Bosses firstBoss;
 
-	cout << "Character stats" << endl;
-	//Declare playercharacter class
-	playerCharacter Mario;
+		cout << "Character stats" << endl;
+		//Declare playercharacter class
+		playerCharacter Mario;
 
-	cout << "What's your name" << endl;
-	cin >> userName;
-	Mario.setName(userName);
+		cout << "What's your name" << endl;
+		cin >> userName;
+		Mario.setName(userName);
 
-	cout << "Attack Damage" << endl;
-	cin >> userAtt;
-	Mario.setAttDamage(userAtt);
+		cout << "Attack Damage" << endl;
+		cin >> userAtt;
+		Mario.setAttDamage(userAtt);
 
-	cout << "HP" << endl;
-	cin >> userhealth;
-	Mario.setHealth(userhealth);
+		cout << "HP" << endl;
+		cin >> userhealth;
+		Mario.setHealth(userhealth); */
 
-	bool battle = false;
+
 	const int ROWS = worldMap.size();
 	const int COLUMNS = worldMap.at(0).size();
 
@@ -378,10 +375,10 @@ int main() {
 	int choice = 0; //User input choice
 	int stage = 0; // Player is on current stage
 	int completedTask = 0;
-	bool battle = false; //Battle mode
+//i	bool battle = false; //Battle mode
 	bool stageClear = false; //Whether or not the player has meet the requirements to move on
-	
-  set_raw_mode(true);
+
+	set_raw_mode(true);
 	show_cursor(false);
 
 	while (true) {
@@ -451,54 +448,54 @@ int main() {
 			//battle = true;
 		}
 
-		}
+	}
 
-		if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
+	if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
+		movecursor(2, COLUMNS + 5);
+		if (rows == 37 and columns == 20) {
+			cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
+			completedTask = 1;
+		} else if (rows == 25 and columns == 23) {
+			cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "I'm not smart enough to unlock it though.\n";
+		}
+	}
+
+	if (getLocation(rows, columns) == 'c') {
+		if (rows == 34 and columns == 1) {
 			movecursor(2, COLUMNS + 5);
-			if (rows == 37 and columns == 20) {
-				cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
-				movecursor(3, COLUMNS + 5);
-				cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
-				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
-				completedTask = 1;
-			} else if (rows == 25 and columns == 23) {
-				cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
-				movecursor(3, COLUMNS + 5);
-				cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
-				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "I'm not smart enough to unlock it though.\n";
-			}
+			cout << BOLDRED << "SUSPICIOUS CAT:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "You should totally trust me when I say that there's a luck system./n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "Anyways, you're luck has mysteriously gone down./n";
 		}
 
-		if (getLocation(rows, columns) == 'c') {
-			if (rows == 34 and columns == 1) {
-				movecursor(2, COLUMNS + 5);
-				cout << BOLDRED << "SUSPICIOUS CAT:\n";
-				movecursor(3, COLUMNS + 5);
-				cout << WHITE << "You should totally trust me when I say that there's a luck system./n";
-				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "Anyways, you're luck has mysteriously gone down./n";
-			}
 
+	}
 
-		}
+	/*
+	if (getLocation(rows, columns) == 'L') { //Puzzle Lock
 
-		/*
-		if (getLocation(rows, columns) == 'L') { //Puzzle Lock
+	}
 
-		}
+	if (getLocation(rows, columns) == 'H') { //Hero encounter
 
-		if (getLocation(rows, columns) == 'H') { //Hero encounter
+	}
 
-		}
+	if (getLocation(rows, columns) == 'P') { // Princess encounter
 
-		if (getLocation(rows, columns) == 'P') { // Princess encounter
+	}
 
-		}
-
-		*/
-
+	*/
+	/*
 		while (battle == true) {
 			int choice = 0;
 			int loc = 3;
@@ -529,8 +526,7 @@ int main() {
 			}
 		}
 
-	} // while }
-
+	*/
 
 
 	set_raw_mode(false);
