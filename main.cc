@@ -244,7 +244,7 @@ int main() {
 	cin >> userhealth;
 	Mario.setHealth(userhealth);
 
-	bool battle = false;
+
 	const int ROWS = worldMap.size();
 	const int COLUMNS = worldMap.at(0).size();
 
@@ -256,8 +256,8 @@ int main() {
 	int completedTask = 0;
 	bool battle = false; //Battle mode
 	bool stageClear = false; //Whether or not the player has meet the requirements to move on
-	
-  set_raw_mode(true);
+
+	set_raw_mode(true);
 	show_cursor(false);
 
 	while (true) {
@@ -326,105 +326,105 @@ int main() {
 			//battle = true;
 		}
 
-		}
+	}
 
-		if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
+	if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
+		movecursor(2, COLUMNS + 5);
+		if (rows == 37 and columns == 20) {
+			cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
+			completedTask = 1;
+		} else if (rows == 25 and columns == 23) {
+			cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "I'm not smart enough to unlock it though.\n";
+		}
+	}
+
+	if (getLocation(rows, columns) == 'c') {
+		if (rows == 34 and columns == 1) {
 			movecursor(2, COLUMNS + 5);
-			if (rows == 37 and columns == 20) {
-				cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
-				movecursor(3, COLUMNS + 5);
-				cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
-				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
-				completedTask = 1;
-			} else if (rows == 25 and columns == 23) {
-				cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
-				movecursor(3, COLUMNS + 5);
-				cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
-				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "I'm not smart enough to unlock it though.\n";
-			}
+			cout << BOLDRED << "SUSPICIOUS CAT:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "You should totally trust me when I say that there's a luck system./n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "Anyways, you're luck has mysteriously gone down./n";
 		}
 
-		if (getLocation(rows, columns) == 'c') {
-			if (rows == 34 and columns == 1) {
-				movecursor(2, COLUMNS + 5);
-				cout << BOLDRED << "SUSPICIOUS CAT:\n";
-				movecursor(3, COLUMNS + 5);
-				cout << WHITE << "You should totally trust me when I say that there's a luck system./n";
-				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "Anyways, you're luck has mysteriously gone down./n";
-			}
 
+	}
 
-		}
+	/*
+	if (getLocation(rows, columns) == 'L') { //Puzzle Lock
 
-		/*
-		if (getLocation(rows, columns) == 'L') { //Puzzle Lock
+	}
 
-		}
+	if (getLocation(rows, columns) == 'H') { //Hero encounter
 
-		if (getLocation(rows, columns) == 'H') { //Hero encounter
+	}
 
-		}
+	if (getLocation(rows, columns) == 'P') { // Princess encounter
 
-		if (getLocation(rows, columns) == 'P') { // Princess encounter
+	}
 
-		}
+	*/
 
-		*/
-
-		while (battle == true) {
-			int choice = 0;
-			int loc = 3;
+	while (battle == true) {
+		int choice = 0;
+		int loc = 3;
+		movecursor(loc, COLUMNS + 5);
+		loc++;
+		cout << WHITE << "What would you like to do?\n";
+		movecursor(loc, COLUMNS + 5);
+		loc++;
+		cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
+		cin >> choice;
+		if (choice == 1) {
 			movecursor(loc, COLUMNS + 5);
 			loc++;
-			cout << WHITE << "What would you like to do?\n";
+			cout << WHITE << "You chose to attack!" << endl;
 			movecursor(loc, COLUMNS + 5);
 			loc++;
-			cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
-			cin >> choice;
-			if (choice == 1) {
-				movecursor(loc, COLUMNS + 5);
-				loc++;
-				cout << WHITE << "You chose to attack!" << endl;
-				movecursor(loc, COLUMNS + 5);
-				loc++;
-				cout << "Boss HP: " << firstBoss - Mario << endl;
-				movecursor(loc, COLUMNS + 5);
-				loc++;
-				cout << firstBoss.getName() << " Attacked you!\n";
-				movecursor(loc, COLUMNS + 5);
-				loc++;
-				cout << "Your HP: " << firstBoss + Mario << endl;
-			} else if (choice == 2) {
-				movecursor(loc, COLUMNS + 5);
-				loc++;
-				cout << WHITE << "You chose to dodge!" << endl;
-			}
+			cout << "Boss HP: " << firstBoss - Mario << endl;
+			movecursor(loc, COLUMNS + 5);
+			loc++;
+			cout << firstBoss.getName() << " Attacked you!\n";
+			movecursor(loc, COLUMNS + 5);
+			loc++;
+			cout << "Your HP: " << firstBoss + Mario << endl;
+		} else if (choice == 2) {
+			movecursor(loc, COLUMNS + 5);
+			loc++;
+			cout << WHITE << "You chose to dodge!" << endl;
 		}
+	}
 
-	} // while }
+} // while }
 
+//make sure to delete this
+/*
+set_raw_mode(false);
+show_cursor(true);
+movecursor(0, 0);
+clearscreen();
 
+int lowerBound = 1;
+int upperBound = 6;
+int numRectangles = 5;
+int answer = 0;
 
-	set_raw_mode(false);
-	show_cursor(true);
-	movecursor(0, 0);
-	clearscreen();
+double result;
 
-	int lowerBound = 1;
-	int upperBound = 6;
-	int numRectangles = 5;
-	int answer = 0;
+result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
 
-	double result;
+cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
 
-	result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
-
-	cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
-
-	int count = 0;
+int count = 0;
 
 
 //	No clue if an attempt limit will be added in future development, only added here for testing purposes
@@ -432,22 +432,22 @@ int main() {
 
 
 
-	while (count != 3) {
-		cout << "Enter answer: ";
-		cin >> answer;
-		if (result == answer) {
-			cout << "Yippee you did it :DD" << endl;
-			return 0;
-		} else {
-			cout << "womp womp :(, try again" << endl;
-		}
-
-		count++;
+while (count != 3) {
+	cout << "Enter answer: ";
+	cin >> answer;
+	if (result == answer) {
+		cout << "Yippee you did it :DD" << endl;
+		return 0;
+	} else {
+		cout << "womp womp :(, try again" << endl;
 	}
 
-	if (count == 3) {
-		cout << "You failed, try again" << endl;
-	}
-
-
+	count++;
 }
+
+if (count == 3) {
+	cout << "You failed, try again" << endl;
+}
+
+
+}*/
