@@ -33,7 +33,7 @@ double leftriemannSum(int a, int b, int numRectangles) {
 }
 
 
-
+/*
 //Class for miniboss
 class Bosses {
 	//basic stats for miniboss
@@ -134,7 +134,7 @@ void OnDeath() {
 	exit(0);
 }
 
-//Attack system.. not sure how to work with this yet.
+
 int operator- (Bosses& bos, playerCharacter& pla) {
 	bos.curHealth -= pla.attDamage;
 	return bos.curHealth;
@@ -145,10 +145,8 @@ int operator+ (Bosses& boss, playerCharacter& play) {
 	play.curHealth -= boss.ATTDamage;
 
 	return play.curHealth;
-
 }
-
-//Attack system.. not sure how to work with this yet.
+*/
 
 
 vector<string> worldMap = {
@@ -223,26 +221,26 @@ void printMap(size_t playRow, size_t playColumn) {
 
 int main() {
 
-	int userhealth, userAtt;
-	string userName;
+	/*	int userhealth, userAtt;
+		string userName;
 
-	Bosses firstBoss;
+		Bosses firstBoss;
 
-	cout << "Character stats" << endl;
-	//Declare playercharacter class
-	playerCharacter Mario;
+		cout << "Character stats" << endl;
+		//Declare playercharacter class
+		playerCharacter Mario;
 
-	cout << "What's your name" << endl;
-	cin >> userName;
-	Mario.setName(userName);
+		cout << "What's your name" << endl;
+		cin >> userName;
+		Mario.setName(userName);
 
-	cout << "Attack Damage" << endl;
-	cin >> userAtt;
-	Mario.setAttDamage(userAtt);
+		cout << "Attack Damage" << endl;
+		cin >> userAtt;
+		Mario.setAttDamage(userAtt);
 
-	cout << "HP" << endl;
-	cin >> userhealth;
-	Mario.setHealth(userhealth);
+		cout << "HP" << endl;
+		cin >> userhealth;
+		Mario.setHealth(userhealth); */
 
 
 	const int ROWS = worldMap.size();
@@ -254,7 +252,7 @@ int main() {
 	int choice = 0; //User input choice
 	int stage = 0; // Player is on current stage
 	int completedTask = 0;
-	bool battle = false; //Battle mode
+//i	bool battle = false; //Battle mode
 	bool stageClear = false; //Whether or not the player has meet the requirements to move on
 
 	set_raw_mode(true);
@@ -373,58 +371,57 @@ int main() {
 	}
 
 	*/
-
-	while (battle == true) {
-		int choice = 0;
-		int loc = 3;
-		movecursor(loc, COLUMNS + 5);
-		loc++;
-		cout << WHITE << "What would you like to do?\n";
-		movecursor(loc, COLUMNS + 5);
-		loc++;
-		cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
-		cin >> choice;
-		if (choice == 1) {
+	/*
+		while (battle == true) {
+			int choice = 0;
+			int loc = 3;
 			movecursor(loc, COLUMNS + 5);
 			loc++;
-			cout << WHITE << "You chose to attack!" << endl;
+			cout << WHITE << "What would you like to do?\n";
 			movecursor(loc, COLUMNS + 5);
 			loc++;
-			cout << "Boss HP: " << firstBoss - Mario << endl;
-			movecursor(loc, COLUMNS + 5);
-			loc++;
-			cout << firstBoss.getName() << " Attacked you!\n";
-			movecursor(loc, COLUMNS + 5);
-			loc++;
-			cout << "Your HP: " << firstBoss + Mario << endl;
-		} else if (choice == 2) {
-			movecursor(loc, COLUMNS + 5);
-			loc++;
-			cout << WHITE << "You chose to dodge!" << endl;
+			cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
+			cin >> choice;
+			if (choice == 1) {
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << WHITE << "You chose to attack!" << endl;
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << "Boss HP: " << firstBoss - Mario << endl;
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << firstBoss.getName() << " Attacked you!\n";
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << "Your HP: " << firstBoss + Mario << endl;
+			} else if (choice == 2) {
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << WHITE << "You chose to dodge!" << endl;
+			}
 		}
-	}
 
-} // while }
+	*/
 
-//make sure to delete this
-/*
-set_raw_mode(false);
-show_cursor(true);
-movecursor(0, 0);
-clearscreen();
 
-int lowerBound = 1;
-int upperBound = 6;
-int numRectangles = 5;
-int answer = 0;
+	set_raw_mode(false);
+	show_cursor(true);
+	movecursor(0, 0);
+	clearscreen();
 
-double result;
+	int lowerBound = 1;
+	int upperBound = 6;
+	int numRectangles = 5;
+	int answer = 0;
 
-result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
+	double result;
 
-cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
+	result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
 
-int count = 0;
+	cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
+
+	int count = 0;
 
 
 //	No clue if an attempt limit will be added in future development, only added here for testing purposes
@@ -432,22 +429,22 @@ int count = 0;
 
 
 
-while (count != 3) {
-	cout << "Enter answer: ";
-	cin >> answer;
-	if (result == answer) {
-		cout << "Yippee you did it :DD" << endl;
-		return 0;
-	} else {
-		cout << "womp womp :(, try again" << endl;
+	while (count != 3) {
+		cout << "Enter answer: ";
+		cin >> answer;
+		if (result == answer) {
+			cout << "Yippee you did it :DD" << endl;
+			return 0;
+		} else {
+			cout << "womp womp :(, try again" << endl;
+		}
+
+		count++;
 	}
 
-	count++;
+	if (count == 3) {
+		cout << "You failed, try again" << endl;
+	}
+
+
 }
-
-if (count == 3) {
-	cout << "You failed, try again" << endl;
-}
-
-
-}*/
