@@ -33,7 +33,7 @@ double leftriemannSum(int a, int b, int numRectangles) {
 }
 
 
-/*
+
 //Class for miniboss
 class Bosses {
 	//basic stats for miniboss
@@ -148,53 +148,70 @@ int operator+ (Bosses& boss, playerCharacter& play) {
 
 	return play.curHealth;
 }
-*/
 
-
+//World Map
 vector<string> worldMap = {
-	"             ---------------             ",
-	"            |               |            ",
-	"            |       D       |            ", //Captured Dragon, game ends when dragon is saved!
-	"            |               |            ",
-	"         |--------*****--------|         ",
-	"         |                     |         ",
-	"         |          P          |         ", //Princess Boss Fight (
-	"         |                     |         ", // Stage 4 (Final)
-	"|-----------------*****-----------------|",
-	"|                L     L                |",
-	"|                                       |",
-	"|              V    H    V       g      |", //Hero Boss Fight, 2 puzzles
-	"|                                       |", // Stage 3
-	"| g                                    c|",
-	"|-----------------*****-----------------|",
-	"|                   V               L   |",
-	"|    V      g                           |",
-	"|                                     g |",
-	"|                             V         |",
-	"|                    g                  |", //Basic enemies, 2 puzzles
+	"               -----------               ",
+	"              |c          |              ",
+	"              |     D     |              ", //Captured Dragon, game ends when dragon is saved!
+	"              |           |              ",
+	"           |------*****------|           ",
+	"           |                 |           ",
+	"           |        P        |           ", //Princess Boss Fight (
+	"           |                 |           ", // Stage 4 (Final)
+	"           |-------| |-------|           ",
+	"                 |q    |                 ",
+	"                 |     |                 ",
+	"                 |*****|                 ",
+	"        |--------|     |--------|        ",
+	"        |                       |        ",
+	"        |      V    H    V      |        ", //Hero Boss Fight, 2 puzzles
+	"        |                       |        ", // Stage 3
+	"        |                      c|        ",
+	"        |---------|   |---------|        ",
+	"                  | q |                  ",
+	"      |-----------|   |-----------|      ",
+	"      |                           |      ",
+	"      |    V                c     |      ",
+	"      |                           |      ",
+	"      |-----------     -----------|      ",
+	"                 |     |                 ",
+	"      |----------|*****|----------|      ",
+	"      |     g                     |      ",
+	"      |                         g |      ",
+	"      |                       V   |      ",
+	"|-----|               g           |-----|", //Basic enemies, 2 puzzles
 	"|          V                            |", // Stage 2
 	"|                            g          |",
 	"|                                       |",
 	"| L q                              V    |",
-	"|-----------------*****-----------------|",
-	"| g                    q                |",
-	"|                              L        |", //Tutorial Puzzle, tutorial battle(?), ~Start of adventure~
-	"|          V                            |", // Stage 1
 	"|                                       |",
-	"|                                    g  |", //SYMBOL LEGEND
-	"|                        g              |",  // D - Dragon, P - Princess, H - Hero
-	"|                                       |",  // V - Human Villagers, c - cat:D, g - Goblin Friends
-	"|   V                                   |",  // L - Gate Lock, ḡ - Guide Goblins
+	"|----------------|     |----------------|",
+	"                 |  q  |                 ",
+	"                 |     |                 ",
+	"|----------------|*****|----------------|",
+	"| g            L       q                |",
+	"|                               V       |", //Tutorial Puzzle, tutorial battle(?), ~Start of adventure~
+	"|                                       |", // Stage 1
+	"|-----|        V                  |-----|",
+	"      |                           |      ", //SYMBOL LEGEND
+	"      |                  g        |      ",  // D - Dragon, P - Princess, H - Hero
+	"|-----|                           |-----|",  // V - Human Villagers, c - cat:D, g - Goblin Friends
+	"|   V                                   |",  // L - Gate Lock, q - Guide Goblins
 	"|                                 V     |",
 	"|c             g                        |",
 	"|-----------------*****-----------------|",
+	"                 |    q|               c ",
+	"   g             |     |  g              ",
 	"                 |     |                 ",
-	"                 |  q  |                 ", //Player Start point (Stage 0)
-	"                 |     |                 ",
-	"                 -------                 ",
+	"                 |*****|                 ",
+	"                q              g         ",
+	"      g                                  ", //Player Start point (Stage 0)
+	"                                         ",
+
 };
 
-
+//Gets player's location
 char getLocation(size_t row, size_t column) {
 	if (row >= worldMap.size()) return ' ';
 	if (column >= worldMap.at(row).size()) return ' ';
@@ -206,7 +223,7 @@ void setLocation(size_t row, size_t column, char c) {
 	if (column >= worldMap.at(row).size()) return;
 	worldMap.at(row).at(column) = c;
 }
-
+//Constantly updates map/player movement
 void printMap(size_t playRow, size_t playColumn) {
 	clearscreen();
 	movecursor(0, 1);
@@ -222,96 +239,10 @@ void printMap(size_t playRow, size_t playColumn) {
 }
 
 int main() {
-	const int ROWS = worldMap.size();
-	const int COLUMNS = worldMap.at(0).size();
-	int rows = ROWS / 2;
-	int columns = COLUMNS / 2;
-	int prevRow = -1;
-	int prevCol = -1; //previous positions
-	int choice = 0;
-	int wall = 0;
-	bool battle = false;
-	set_raw_mode(true);
-	show_cursor(false);
-
-	while (true) {
-		int c = toupper(quick_read());
-		if (c == 'W' or c == UP_ARROW) rows--;
-		if (c == 'S' or c == DOWN_ARROW) rows++;
-		if (c == 'A' or c == LEFT_ARROW) columns--;
-		if (c == 'D' or c == RIGHT_ARROW) columns++;
-
-		if (!(rows == prevRow and columns == prevCol)) {
-			printMap(rows, columns);
-			prevRow = rows;
-			prevCol = columns;
-			movecursor(2, COLUMNS + 5);
-			movecursor(ROWS + 2, 0);
-			cout.flush();
-		}
-
-		if (getLocation(rows, columns) == 'e') {
-			setLocation(rows, columns, ' ');
-			movecursor(2, COLUMNS + 5);
-			cout << BOLDRED << "ENEMY ENCOUNTERED\n";
-			battle = true;
-		}
-
-		//Dumb wall easter egg, don't worry about it
-		if (getLocation(rows, columns) == '-' or getLocation(rows, columns) == '|') {
-			movecursor(2, COLUMNS + 5);
-			cout << "That's a wall\n";
-		}
-		/*if (wall == 20) {
-			cout << "You have been determined to be drunk, and therefore cannot defeat the princess\n";
-			cout << "Please sober up before proceeding\n";
-			break;
-		} else if (wall <= 5 or wall >= 11) {
-			cout << "You have hit a wall\n";
-			wall++;
-		} else if (wall >= 6) {
-			cout << "Stop hitting the wall\n";
-			wall++;
-		} else if (wall == 10) {
-			cout << "Are you perhaps drunk?\n";
-			wall++;
-		}
-		} */
-
-
-		if (getLocation(rows, columns) == 'c') {
-			movecursor(ROWS + 2, 0);
-			cout << "Completed Test\n";
-			usleep(2'000'000);
-			break;
-		}
-
-		while (battle == true) {
-			movecursor(3, COLUMNS + 5);
-			cout << WHITE << "What would you like to do?\n";
-			movecursor(4, COLUMNS + 5);
-			cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
-			cin >> choice;
-
-			movecursor(5, COLUMNS + 5);
-			if (choice == 1) {
-				cout << WHITE << "You chose to attack!" << endl;
-			}
-			if (choice == 2) {
-				cout << WHITE << "You chose to dodge!" << endl;
-			}
-
-			battle = false;
-		}
-
-
-	}
-	set_raw_mode(false);
-	show_cursor(true);
 	movecursor(0, 0);
 	clearscreen();
 
-	int lowerBound = 1;
+	/*int lowerBound = 1;
 	int upperBound = 6;
 	int numRectangles = 5;
 	int answer = 0;
@@ -342,40 +273,40 @@ int main() {
 
 	if (count == 3) {
 		cout << "You failed, try again" << endl;
-	}
+	}*/
 
-	/*	int userhealth, userAtt;
-		string userName;
+	int userhealth, userAtt;
+	string userName;
 
-		Bosses firstBoss;
+	Bosses firstBoss;
 
-		cout << "Character stats" << endl;
-		//Declare playercharacter class
-		playerCharacter Mario;
+	cout << "Character stats" << endl;
+	//Declare playercharacter class
+	playerCharacter Mario;
 
-		cout << "What's your name" << endl;
-		cin >> userName;
-		Mario.setName(userName);
+	cout << "What's your name" << endl;
+	cin >> userName;
+	Mario.setName(userName);
 
-		cout << "Attack Damage" << endl;
-		cin >> userAtt;
-		Mario.setAttDamage(userAtt);
+	cout << "Attack Damage" << endl;
+	cin >> userAtt;
+	Mario.setAttDamage(userAtt);
 
-		cout << "HP" << endl;
-		cin >> userhealth;
-		Mario.setHealth(userhealth); */
+	cout << "HP" << endl;
+	cin >> userhealth;
+	Mario.setHealth(userhealth);
 
 
 	const int ROWS = worldMap.size();
 	const int COLUMNS = worldMap.at(0).size();
 
-	int rows = 38, columns = 20;
+	int rows = 38, columns = 20; //Starting position numbers
 	int prevRow = -1, prevCol = -1; //previous positions for printing map
 	int barRow = 0, barCol = 0; //previous positions for barriers
 	int choice = 0; //User input choice
 	int stage = 0; // Player is on current stage
 	int completedTask = 0;
-//i	bool battle = false; //Battle mode
+	bool battle = false; //Battle mode
 	bool stageClear = false; //Whether or not the player has meet the requirements to move on
 
 	set_raw_mode(true);
@@ -405,17 +336,17 @@ int main() {
 		//WALL BARRIERS AND GATES
 		if (getLocation(rows, columns) == '-') { //Bottoms and tops
 			if (rows == 0) rows++;
-			else if (rows == 35 or rows == 39) rows--;
-			else if (rows == 4 or rows == 8 or rows == 14 or rows == 24) {
+			else if (rows == 56) rows--;
+			else if (rows == 49) {
 				if (barRow == rows - 1) rows--;
 				else if (barRow == rows + 1) rows++;
 			}
-		} else if (getLocation(rows, columns) == '|') { //Side walls
+		}/else if (getLocation(rows, columns) == '|') { //Side walls
 			if (columns == 0  or columns == 9 or columns == 12 or columns == 17) columns++;
 			else if (columns == 23 or columns == 28 or columns == 31 or columns == 40) columns--;
 
-		} else if (getLocation(rows, columns) == '*') { //Gates
-			if (completedTask == 1 && stage == 0) {
+		} /*else if (getLocation(rows, columns) == '*') { //Gates
+			if (completedTask == 0 && stage == 0) {
 				movecursor(2, COLUMNS + 5);
 				cout << "The gate has been unlocked.\n";
 				for (int i = 0; i < 5; i++) setLocation(35, i + 18, ' ');
@@ -427,7 +358,7 @@ int main() {
 				cout << "You cannot enter this area yet, the gate is locked.\n";
 				usleep(1'000'000);
 			}
-		}
+		} */
 
 		//CHARACTERS AND OBJECTS
 		if (getLocation(rows, columns) == 'D') { //End goal/Dragon is saved
@@ -448,54 +379,56 @@ int main() {
 			//battle = true;
 		}
 
-	}
-
-	if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
-		movecursor(2, COLUMNS + 5);
-		if (rows == 37 and columns == 20) {
-			cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
-			movecursor(3, COLUMNS + 5);
-			cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
-			movecursor(4, COLUMNS + 5);
-			cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
-			completedTask = 1;
-		} else if (rows == 25 and columns == 23) {
-			cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
-			movecursor(3, COLUMNS + 5);
-			cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
-			movecursor(4, COLUMNS + 5);
-			cout << WHITE << "I'm not smart enough to unlock it though.\n";
-		}
-	}
-
-	if (getLocation(rows, columns) == 'c') {
-		if (rows == 34 and columns == 1) {
+		if (getLocation(rows, columns) == 'q') { //Guide Goblins (ones/with neccessary info)
 			movecursor(2, COLUMNS + 5);
-			cout << BOLDRED << "SUSPICIOUS CAT:\n";
-			movecursor(3, COLUMNS + 5);
-			cout << WHITE << "You should totally trust me when I say that there's a luck system./n";
-			movecursor(4, COLUMNS + 5);
-			cout << WHITE << "Anyways, you're luck has mysteriously gone down./n";
+			if (rows == 54 and columns == 16) { //Outside Goblin
+				cout << BOLDGREEN << "COMMANDER GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Oh villager! What are you doing here? It's dangerous to be here right now.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "The knightly goblins are doing a rescure mission to save the dragon from the tyrranical human princess under the Goblin King's orders!\n";
+				movecursor(5, COLUMNS + 5);
+				cout << WHITE << "You should go back to the village, where it's safe. The knights will handle the mission and claim the gold rew-\n";
+				movecursor(6, COLUMNS + 5);
+				cout << WHITE << "I MEAN- Save the dragon and recieve NO REWARD whatsoever. Hahaha...\n";
+			} else if (rows == 50 and columns == 22) {
+				cout << BOLDGREEN << "SELFISH COMMANDER GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "What's a villager doing here?\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "We don't need a random villager to take the gold reward. Leave this instant and go back to the village!\n";
+				completedTask = 1;
+			}
 		}
 
+		if (getLocation(rows, columns) == 'c') { //cat
+			if (rows == 50 and columns == 39) { // Outside cat
+				movecursor(2, COLUMNS + 5);
+				cout << BOLDRED << "SUSPICIOUS CAT:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "You should totally trust me when I say that there's a luck system.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Anyways, you're luck has mysteriously gone down.\n";
+			}
 
-	}
 
-	/*
-	if (getLocation(rows, columns) == 'L') { //Puzzle Lock
+		}
 
-	}
+		/*
+		if (getLocation(rows, columns) == 'L') { //Puzzle Lock
 
-	if (getLocation(rows, columns) == 'H') { //Hero encounter
+		}
 
-	}
+		if (getLocation(rows, columns) == 'H') { //Hero encounter
 
-	if (getLocation(rows, columns) == 'P') { // Princess encounter
+		}
 
-	}
+		if (getLocation(rows, columns) == 'P') { // Princess encounter
 
-	*/
-	/*
+		}
+
+		*/
+
 		while (battle == true) {
 			int choice = 0;
 			int loc = 3;
@@ -526,9 +459,8 @@ int main() {
 			}
 		}
 
-	*/
 
-
+	}
 	set_raw_mode(false);
 	show_cursor(true);
 	movecursor(0, 0);
@@ -551,8 +483,6 @@ int main() {
 //	No clue if an attempt limit will be added in future development, only added here for testing purposes
 
 
-
-
 	while (count != 3) {
 		cout << "Enter answer: ";
 		cin >> answer;
@@ -571,7 +501,6 @@ int main() {
 	}
 
 
-	}
 	// puzzle 2:
 	int start = 1;
 	int end = 30;
