@@ -154,8 +154,8 @@ vector<string> worldMap = {
 	"               -----------               ",
 	"              |c          |              ",
 	"              |     D     |              ", //Captured Dragon, game ends when dragon is saved!
-	"              |           |              ",
-	"           |------*****------|           ",
+	"              |--|     |--|              ",
+	"           |-----|*****|-----|           ",
 	"           |                 |           ",
 	"           |        P        |           ", //Princess Boss Fight (
 	"           |                 |           ", // Stage 4 (Final)
@@ -174,7 +174,7 @@ vector<string> worldMap = {
 	"      |                           |      ",
 	"      |    V                c     |      ",
 	"      |                           |      ",
-	"      |-----------     -----------|      ",
+	"      |----------|     |----------|      ",
 	"                 |     |                 ",
 	"      |----------|*****|----------|      ",
 	"      |     g                     |      ",
@@ -200,7 +200,7 @@ vector<string> worldMap = {
 	"|   V                                   |",  // L - Gate Lock, q - Guide Goblins
 	"|                                 V     |",
 	"|c             g                        |",
-	"|-----------------*****-----------------|",
+	"|----------------|*****|----------------|",
 	"                 |    q|               c ",
 	"   g             |     |  g              ",
 	"                 |     |                 ",
@@ -231,7 +231,7 @@ void printMap(size_t playRow, size_t playColumn) {
 		for (size_t j = 0; j < worldMap.at(i).size(); j++) { // columns
 			if (i == playRow and j == playColumn)
 				cout << GREEN << "G";
-			else cout << WHITE << worldMap.at(i).at(j);
+			else cout << BOLDWHITE << worldMap.at(i).at(j);
 		}
 		cout << endl;
 	}
@@ -335,30 +335,34 @@ int main() {
 
 		//WALL BARRIERS AND GATES
 		if (getLocation(rows, columns) == '-') { //Bottoms and tops
-			if (rows == 0) rows++;
-			else if (rows == 56) rows--;
-			else if (rows == 49) {
+			if (rows == 0 or rows == 12 or rows == 19 or rows == 25 or rows == 29 or rows == 38 or rows == 45) rows++;
+			if (rows == 17 or rows == 23 or rows == 35 or rows == 42) rows --;
+			else if (rows == 4 or rows == 8 or rows == 49) {
 				if (barRow == rows - 1) rows--;
 				else if (barRow == rows + 1) rows++;
 			}
 		}  else if (getLocation(rows, columns) == '|') { //Side walls
 			if ((columns == 17 or columns == 23) and barCol == columns - 1) columns--;
-
 			else if ((columns == 17 or columns == 23) and rows == 53 and barRow == rows + 1) rows++;
-
 			else if ((columns == 17 or columns == 23) and barCol == columns + 1) columns++;
-
 			else if (columns == 0 or columns == 6 or columns == 18 or columns == 8 or columns == 19 or columns == 11 or columns == 14) columns++;
-
 			else if (columns == 40 or columns == 34 or columns == 22 or columns == 21 or columns == 29 or columns == 26 or columns == 32) columns--;
 
-		} /*else if (getLocation(rows, columns) == '*') { //Gates
-			if (completedTask == 0 && stage == 0) {
+		} /*else if (getLocation(rows, columns) == '*') { //Gates ( 53, 49, 38, 25, 11, 4)
+			if (completedTask == 1 && stage == 0) {
 				movecursor(2, COLUMNS + 5);
 				cout << "The gate has been unlocked.\n";
-				for (int i = 0; i < 5; i++) setLocation(35, i + 18, ' ');
-				completedTask = 0;
+				for (int i = 0; i < 5; i++) setLocation(53 i + 18, ' ');
+			} else if (completedTask == 2 && stage == 0) {
+				movecursor(2, COLUMNS + 5);
+                cout << "The gate has been unlocked.\n";
+                for (int i = 0; i < 5; i++) setLocation(49, i + 18, ' ');
 				stage = 1;
+			} else if (completedTask == ... && stage == 1) {
+				movecursor(2, COLUMNS + 5);
+                cout << "The gate has been unlocked.\n";
+                for (int i = 0; i < 5; i++) setLocation(38, i + 18, ' ');
+                stage = 2;
 			} else {
 				rows++;
 				movecursor(2, COLUMNS + 5);
@@ -372,9 +376,9 @@ int main() {
 			movecursor(2, COLUMNS + 5);
 			cout << "Congratulations!!! You've saved the dragon from the evil princess!\n";
 			movecursor(3, COLUMNS + 5);
-			cout << "The dragon gives you a ride back to your small town village\n and you lived happily ever after!\n";
+			cout << "The dragon gives you a ride back to your small town village and you lived happily ever after!\n";
 			movecursor(4, COLUMNS + 5);
-			cout << BOLDWHITE << "Thank you for playing our game!\n";
+			cout << WHITE << "Thank you for playing our game!\n";
 			usleep(5'000'000);
 			break;
 		}
@@ -398,14 +402,37 @@ int main() {
 				cout << WHITE << "You should go back to the village, where it's safe. The knights will handle the mission and claim the gold rew-\n";
 				movecursor(6, COLUMNS + 5);
 				cout << WHITE << "I MEAN- Save the dragon and recieve NO REWARD whatsoever. Hahaha...\n";
+				completedTask = 1;
 			} else if (rows == 50 and columns == 22) {
 				cout << BOLDGREEN << "SELFISH COMMANDER GOBLIN:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "What's a villager doing here?\n";
 				movecursor(4, COLUMNS + 5);
 				cout << WHITE << "We don't need a random villager to take the gold reward. Leave this instant and go back to the village!\n";
-				completedTask = 1;
+				completedTask = 2;
 			}
+		}
+
+		if (getLocations(rows, columns) == 'g') {
+			mvoecursor(2, COLUMNS + 5);
+			if (rows == 55 and columns == 6) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "I really don't hate doing my job. But at the same time I hate the human princess even more, so...\n";
+			} else if (rows == 51 and COLUMNS == 3) {
+				cout << BOLDGREEN << "TIRED GOBLIN SOLDIER:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Do you think we'll be done with this mission before 5 PM? I want to go home already.\n";
+			 } else if (rows == 54 and COLUMNS == 31) {
+                cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
+                movecursor(3, COLUMNS + 5);
+                cout << WHITE << "Knowing how the commanders are, they'll probably take all the reward gold for themselves.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "It's not really fair considering most of them are hiding instead of fighting.\n";
+			 } else if (rows == 51 and COLUMNS == 26) {
+                cout << BOLDGREEN << "CONFUSED GOBLIN SOLDIER:\n";
+                movecursor(3, COLUMNS + 5);
+                cout << WHITE << "Do you think we'll be done with this mission before 5 PM? I want to go home already.\n";
 		}
 
 		if (getLocation(rows, columns) == 'c') { //cat
@@ -423,7 +450,7 @@ int main() {
 
 		/*
 		if (getLocation(rows, columns) == 'L') { //Puzzle Lock
-
+			if (
 		}
 
 		if (getLocation(rows, columns) == 'H') { //Hero encounter
