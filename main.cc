@@ -300,7 +300,7 @@ int main() {
 	const int ROWS = worldMap.size();
 	const int COLUMNS = worldMap.at(0).size();
 
-	int rows = 38, columns = 20; //Starting position numbers
+	int rows = 56, columns = 20; //Starting position numbers
 	int prevRow = -1, prevCol = -1; //previous positions for printing map
 	int barRow = 0, barCol = 0; //previous positions for barriers
 	int choice = 0; //User input choice
@@ -341,9 +341,16 @@ int main() {
 				if (barRow == rows - 1) rows--;
 				else if (barRow == rows + 1) rows++;
 			}
-		}/else if (getLocation(rows, columns) == '|') { //Side walls
-			if (columns == 0  or columns == 9 or columns == 12 or columns == 17) columns++;
-			else if (columns == 23 or columns == 28 or columns == 31 or columns == 40) columns--;
+		}  else if (getLocation(rows, columns) == '|') { //Side walls
+			if ((columns == 17 or columns == 23) and barCol == columns - 1) columns--;
+
+			else if ((columns == 17 or columns == 23) and rows == 53 and barRow == rows + 1) rows++;
+
+			else if ((columns == 17 or columns == 23) and barCol == columns + 1) columns++;
+
+			else if (columns == 0 or columns == 6 or columns == 18 or columns == 8 or columns == 19 or columns == 11 or columns == 14) columns++;
+
+			else if (columns == 40 or columns == 34 or columns == 22 or columns == 21 or columns == 29 or columns == 26 or columns == 32) columns--;
 
 		} /*else if (getLocation(rows, columns) == '*') { //Gates
 			if (completedTask == 0 && stage == 0) {
