@@ -163,9 +163,9 @@ vector<string> worldMap = {
 	"                 |q    |                 ",
 	"                 |     |                 ",
 	"                 |*****|                 ",
-	"        |--------|     |--------|        ",
+	"        |--------|  L  |--------|        ",
 	"        |                       |        ",
-	"        |      V    H    V      |        ", //Hero Boss Fight, 2 puzzles
+	"        |      V    H    V      |        ", //Hero Boss Fight, 1 puzzle
 	"        |                       |        ", // Stage 3
 	"        |                      c|        ",
 	"        |---------|   |---------|        ",
@@ -181,23 +181,23 @@ vector<string> worldMap = {
 	"      |                         g |      ",
 	"      |                       V   |      ",
 	"|-----|               g           |-----|", //Basic enemies, 2 puzzles
-	"|          V                            |", // Stage 2
+	"|c         V                        L   |", // Stage 2
 	"|                            g          |",
 	"|                                       |",
-	"| L q                              V    |",
-	"|                                       |",
+	"| L                                V    |",
+	"|       V                               |",
 	"|----------------|     |----------------|",
 	"                 |  q  |                 ",
 	"                 |     |                 ",
 	"|----------------|*****|----------------|",
 	"| g            L       q                |",
-	"|                               V       |", //Tutorial Puzzle, tutorial battle(?), ~Start of adventure~
+	"|                               V       |", //2 Puzzles, tutorial battle(?), ~Start of adventure~
 	"|                                       |", // Stage 1
 	"|-----|        V                  |-----|",
 	"      |                           |      ", //SYMBOL LEGEND
 	"      |                  g        |      ",  // D - Dragon, P - Princess, H - Hero
 	"|-----|                           |-----|",  // V - Human Villagers, c - cat:D, g - Goblin Friends
-	"|   V                                   |",  // L - Gate Lock, q - Guide Goblins
+	"|   V                                 L |",  // L - Gate Lock, q - Guide Goblins
 	"|                                 V     |",
 	"|c             g                        |",
 	"|----------------|*****|----------------|",
@@ -343,8 +343,12 @@ int main() {
 			}
 		}  else if (getLocation(rows, columns) == '|') { //Side walls
 			if ((columns == 17 or columns == 23) and barCol == columns - 1) columns--;
-			else if ((columns == 17 or columns == 23) and rows == 53 and barRow == rows + 1) rows++;
-			else if ((columns == 17 or columns == 23) and barCol == columns + 1) columns++;
+			else if (columns == 17 or columns == 23) {
+				if (rows == 49 or rows == 38 or rows == 35 or rows == 25 or rows == 23 or rows == 9 or rows == 12 or rows == 4 or rows == 3 or rows == 53) {
+					if (barRow == rows - 1) rows--;
+					if (barRow == rows + 1) rows++;
+				}
+			} else if ((columns == 17 or columns == 23) and barCol == columns + 1) columns++;
 			else if (columns == 0 or columns == 6 or columns == 18 or columns == 8 or columns == 19 or columns == 11 or columns == 14) columns++;
 			else if (columns == 40 or columns == 34 or columns == 22 or columns == 21 or columns == 29 or columns == 26 or columns == 32) columns--;
 
@@ -413,26 +417,31 @@ int main() {
 			}
 		}
 
-		if (getLocations(rows, columns) == 'g') {
-			mvoecursor(2, COLUMNS + 5);
-			if (rows == 55 and columns == 6) {
+		if (getLocation(rows, columns) == 'g') {
+			movecursor(2, COLUMNS + 5);
+			if (rows == 55 and columns == 6) { // STAGE 1 Goblins
 				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "I really don't hate doing my job. But at the same time I hate the human princess even more, so...\n";
-			} else if (rows == 51 and COLUMNS == 3) {
+			} else if (rows == 51 and columns == 3) {
 				cout << BOLDGREEN << "TIRED GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "Do you think we'll be done with this mission before 5 PM? I want to go home already.\n";
-			 } else if (rows == 54 and COLUMNS == 31) {
-                cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
-                movecursor(3, COLUMNS + 5);
-                cout << WHITE << "Knowing how the commanders are, they'll probably take all the reward gold for themselves.\n";
+			} else if (rows == 54 and columns == 31) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Knowing how the commanders are, they'll probably take all the reward gold for themselves.\n";
 				movecursor(4, COLUMNS + 5);
 				cout << WHITE << "It's not really fair considering most of them are hiding instead of fighting.\n";
-			 } else if (rows == 51 and COLUMNS == 26) {
-                cout << BOLDGREEN << "CONFUSED GOBLIN SOLDIER:\n";
-                movecursor(3, COLUMNS + 5);
-                cout << WHITE << "Do you think we'll be done with this mission before 5 PM? I want to go home already.\n";
+			} else if (rows == 51 and columns == 26) {
+				cout << BOLDGREEN << "CONFUSED GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "What the heck am I doing here? I'm not even a soldier, I shouldn't be here.\n";
+			} else if (rows == 48 and columns == 15) { //STAGE 2 Goblins
+				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "I've been trying to get farther into the castle, but the humans keep attacking me!\n";
+			}
 		}
 
 		if (getLocation(rows, columns) == 'c') { //cat
@@ -449,16 +458,36 @@ int main() {
 		}
 
 		/*
-		if (getLocation(rows, columns) == 'L') { //Puzzle Lock
-			if (
+		if (getLocation(rows, columns) == 'L') { //Puzzle Locks
+			if (rows == 39 and columns == 15) {
+			//LOCK #1
+			} else if (rows == 46 and columns == 38) {
+			//LOCK #2
+			} else if (rows == 30 and columns == 36) {
+			//LOCK #3
+			} else if (rows == 33 and columns == 2) {
+			//LOCK #4
+			} else if (rows == 12 and columnd == 20) {
+			//LOCK #5
+			}
 		}
 
 		if (getLocation(rows, columns) == 'H') { //Hero encounter
+			movecursor (2, COLUMNS + 5);
+			cout << BOLDBLUE << "HERO OF THE HUMAN KINGDOM:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "Temp dialoge\n";
 
+			//hero battle commences
 		}
 
 		if (getLocation(rows, columns) == 'P') { // Princess encounter
+			movecursor(2, COLUMNS + 5);
+			cout << BOLDYELLOW << "PRINCESS OF THE HUMAN KINGDOM:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "temp dialoge\n";
 
+			//Princess battle commences
 		}
 
 		*/
