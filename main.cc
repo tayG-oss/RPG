@@ -342,14 +342,14 @@ int main() {
 				else if (barRow == rows + 1) rows++;
 			}
 		}  else if (getLocation(rows, columns) == '|') { //Side walls
-			if ((columns == 17 or columns == 23) and barCol == columns - 1) columns--;
-			else if (columns == 17 or columns == 23) {
-				if (rows == 49 or rows == 38 or rows == 35 or rows == 25 or rows == 23 or rows == 9 or rows == 12 or rows == 4 or rows == 3 or rows == 53) {
+			if (columns == 17 or columns == 23) {
+				if (barCol == columns - 1) columns--;
+				else if (barCol == columns + 1) columns++;
+				else if (rows == 49 or rows == 38 or rows == 35 or rows == 25 or rows == 23 or rows == 9 or rows == 12 or rows == 4 or rows == 3 or rows == 53) {
 					if (barRow == rows - 1) rows--;
-					if (barRow == rows + 1) rows++;
+					else if (barRow == rows + 1) rows++;
 				}
-			} else if ((columns == 17 or columns == 23) and barCol == columns + 1) columns++;
-			else if (columns == 0 or columns == 6 or columns == 18 or columns == 8 or columns == 19 or columns == 11 or columns == 14) columns++;
+			} else if (columns == 0 or columns == 6 or columns == 18 or columns == 8 or columns == 19 or columns == 11 or columns == 14) columns++;
 			else if (columns == 40 or columns == 34 or columns == 22 or columns == 21 or columns == 29 or columns == 26 or columns == 32) columns--;
 
 		} /*else if (getLocation(rows, columns) == '*') { //Gates ( 53, 49, 38, 25, 11, 4)
