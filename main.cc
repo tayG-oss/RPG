@@ -452,6 +452,13 @@ int main() {
 				cout << WHITE << "You should totally trust me when I say that there's a luck system.\n";
 				movecursor(4, COLUMNS + 5);
 				cout << WHITE << "Anyways, you're luck has mysteriously gone down.\n";
+			} else if (rows == 48 and columns == 1) {
+				movecursor(2, COLUMNS + 5);
+				cout << BOLDRED << "SUSPICIOUS CAT #2:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Do you still believe that there's a luck system?\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Anyways, you're luck has increased by 5%.\n";
 			}
 
 
