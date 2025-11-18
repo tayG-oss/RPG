@@ -340,6 +340,7 @@ int main() {
 		}
 
 
+
 		//WALL BARRIERS AND GATES
 		if (getLocation(rows, columns) == '-') { //Bottoms and tops
 			if (rows == 0 or rows == 12 or rows == 19 or rows == 25 or rows == 29 or rows == 38 or rows == 45) rows++;
@@ -602,6 +603,8 @@ int main() {
 	}
 
 
+	}
+
 	// puzzle 2:
 	int start = 1;
 	int end = 30;
@@ -676,6 +679,7 @@ while (count != 3) {
 		cout << "Yippee you did it :DD" << endl;
 		return 0;
 	} else {
+
 		cout << "womp womp :(, try again" << endl;
 	}
 
