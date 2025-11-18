@@ -149,7 +149,14 @@ int operator+ (Bosses& boss, playerCharacter& play) {
 	return play.curHealth;
 }
 
+
 //World Map
+
+}
+
+//Attack system.. not sure how to work with this yet.
+
+
 vector<string> worldMap = {
 	"               -----------               ",
 	"              |c          |              ",
@@ -461,8 +468,25 @@ int main() {
 				cout << WHITE << "Anyways, you're luck has increased by 5%.\n";
 			}
 
+	}
 
+	if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
+		movecursor(2, COLUMNS + 5);
+		if (rows == 37 and columns == 20) {
+			cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
+			completedTask = 1;
+		} else if (rows == 25 and columns == 23) {
+			cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
+			movecursor(3, COLUMNS + 5);
+			cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
+			movecursor(4, COLUMNS + 5);
+			cout << WHITE << "I'm not smart enough to unlock it though.\n";
 		}
+	}
 
 		/*
 		if (getLocation(rows, columns) == 'L') { //Puzzle Locks
@@ -496,15 +520,22 @@ int main() {
 
 			//Princess battle commences
 		}
+    */
 
-		*/
-
-		while (battle == true) {
-			int choice = 0;
-			int loc = 3;
+	while (battle == true) {
+		int choice = 0;
+		int loc = 3;
+		movecursor(loc, COLUMNS + 5);
+		loc++;
+		cout << WHITE << "What would you like to do?\n";
+		movecursor(loc, COLUMNS + 5);
+		loc++;
+		cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
+		cin >> choice;
+		if (choice == 1) {
 			movecursor(loc, COLUMNS + 5);
 			loc++;
-			cout << WHITE << "What would you like to do?\n";
+			cout << WHITE << "You chose to attack!" << endl;
 			movecursor(loc, COLUMNS + 5);
 			loc++;
 			cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
@@ -595,113 +626,197 @@ int main() {
 			sequence.at(i - 1) = "fizz";
 		} else {
 			sequence.at(i - 1) = to_string(i);
+
+			cout << "Boss HP: " << firstBoss - Mario << endl;
+			movecursor(loc, COLUMNS + 5);
+			loc++;
+			cout << firstBoss.getName() << " Attacked you!\n";
+			movecursor(loc, COLUMNS + 5);
+			loc++;
+			cout << "Your HP: " << firstBoss + Mario << endl;
+		} else if (choice == 2) {
+			movecursor(loc, COLUMNS + 5);
+			loc++;
+			cout << WHITE << "You chose to dodge!" << endl;
 		}
 	}
 
-	cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
-	cout << "New Ruels: " << endl;
-	cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
-	cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
-	cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
-	cout << "good luck :)" << endl;
-	cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
+} // while }
 
-	while (attempts < max_attempts) {
-		for (int i = 0; i < sequence.size(); i++) {
-			string fb;
-			getline(cin, fb);
-			if (fb != sequence.at(i)) {
-				mistake++;
-			}
-		}
 
-		if (mistake == 0) {
-			cout << "Congrats, you did it!" << endl;
-			break;
-		} else {
-			attempts++;
-		}
-		if (attempts < max_attempts) {
-			cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
-		} else {
-			cout << "You failed the sequence :(...womp womp" << endl;
-		}
-	}
 
-	// puzzle 3:
-	string word1 = "cabbage";
-	string w1;
-	string word2 = "abbreviation";
-	string w2;
-	string word3 = "discombobulated";
-	string w3;
-	string word4 = "deinstitutionalisation";
-	string w4;
-	int mistakes = 0;
+set_raw_mode(false);
+show_cursor(true);
+movecursor(0, 0);
+clearscreen();
 
-	cout << "Four words to unscramble...Good luck" << endl;
+int lowerBound = 1;
+int upperBound = 6;
+int numRectangles = 5;
+int answer = 0;
 
-	cout << "Unscramble aeagbcb" << endl;
+double result;
 
-	while (true) {
-		cin >> w1;
-		for (char &c : w1) c = tolower(c);
+result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
 
-		if (w1 == word1) {
-			cout << "Good job, next word" << endl;
-			break;
-		} else {
-			mistakes++;
-		}
-	}
+cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
 
-	cout << "Unscramble nrvbeiiaobat" << endl;
+int count = 0;
 
-	while (true) {
-		cin >> w2;
-		for (char &c : w2) c = tolower(c);
 
-		if (w2 == word2) {
-			cout << "Good job, next word" << endl;
-			break;
-		} else {
-			mistakes++;
-		}
-	}
 
-	cout << "Unscramble toaoddbibesmcul" << endl;
 
-	while (true) {
-		cin >> w3;
-		for (char &c : w3) c = tolower(c);
 
-		if (w3 == word3) {
-			cout << "Good job, next word" << endl;
-			break;
-		} else {
-			mistakes++;
-		}
-	}
 
-	cout << "Unscramble ztonniiiotiseuditalant" << endl;
 
-	while (true) {
-		cin >> w4;
-		for (char &c : w4) c = tolower(c);
-
-		if (w4 == word4) {
-			cout << "Good job, next word" << endl;
-			break;
-		} else {
-			mistakes++;
-		}
-	}
-	if (mistakes == 0) {
-		cout << "Hooray no mistakes :DD" << endl;
-	} else if (mistakes == 1) {
-		cout << "You made one mistake :)" << endl;
+while (count != 3) {
+	cout << "Enter answer: ";
+	cin >> answer;
+	if (result == answer) {
+		cout << "Yippee you did it :DD" << endl;
+		return 0;
 	} else {
-		cout << "You made " << mistakes << " mistakes ;(" << endl;
+		cout << "womp womp :(, try again" << endl;
 	}
+
+	count++;
+}
+
+if (count == 3) {
+	cout << "You failed, try again" << endl;
+}
+
+// puzzle 2:
+int start = 1;
+int end = 30;
+int attempts = 0;
+int max_attempts = 5;
+int mistake = 0;
+
+vector<string> sequence(30);
+
+for (int i = start; i <= end; i++) {
+	if (i % 15 == 0) {
+		sequence.at(i - 1) = "fizzbuzz";
+	} else if (i % 14 == 0) {
+		sequence.at(i - 1) = "3x + 2 = 44";
+	} else if (i % 13 == 0) {
+		sequence.at(i - 1) = "deurtuahtiang";
+	} else if (i % 11 == 0) {
+		sequence.at(i - 1) = "uh-lehvuhntean";
+	} else if (i % 5 == 0) {
+		sequence.at(i - 1) = "buzz";
+	} else if (i % 3 == 0) {
+		sequence.at(i - 1) = "fizz";
+	} else {
+		sequence.at(i - 1) = to_string(i);
+	}
+}
+
+cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
+cout << "New Ruels: " << endl;
+cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
+cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
+cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
+cout << "good luck :)" << endl;
+cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
+
+while (attempts < max_attempts) {
+	for (int i = 0; i < sequence.size(); i++) {
+		string fb;
+		getline(cin, fb);
+		if (fb != sequence.at(i)) {
+			mistake++;
+		}
+	}
+
+	if (mistake == 0) {
+		cout << "Congrats, you did it!" << endl;
+		break;
+	} else {
+		attempts++;
+	}
+	if (attempts < max_attempts) {
+		cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
+	} else {
+		cout << "You failed the sequence :(...womp womp" << endl;
+	}
+}
+
+// puzzle 3:
+string word1 = "cabbage";
+string w1;
+string word2 = "abbreviation";
+string w2;
+string word3 = "discombobulated";
+string w3;
+string word4 = "deinstitutionalisation";
+string w4;
+int mistakes = 0;
+
+cout << "Four words to unscramble...Good luck" << endl;
+
+cout << "Unscramble aeagbcb" << endl;
+
+while (true) {
+	cin >> w1;
+	for (char &c : w1) c = tolower(c);
+
+	if (w1 == word1) {
+		cout << "Good job, next word" << endl;
+		break;
+	} else {
+		mistakes++;
+	}
+}
+
+cout << "Unscramble nrvbeiiaobat" << endl;
+
+while (true) {
+	cin >> w2;
+	for (char &c : w2) c = tolower(c);
+
+	if (w2 == word2) {
+		cout << "Good job, next word" << endl;
+		break;
+	} else {
+		mistakes++;
+	}
+}
+
+cout << "Unscramble toaoddbibesmcul" << endl;
+
+while (true) {
+	cin >> w3;
+	for (char &c : w3) c = tolower(c);
+
+	if (w3 == word3) {
+		cout << "Good job, next word" << endl;
+		break;
+	} else {
+		mistakes++;
+	}
+}
+
+cout << "Unscramble ztonniiiotiseuditalant" << endl;
+
+while (true) {
+	cin >> w4;
+	for (char &c : w4) c = tolower(c);
+
+	if (w4 == word4) {
+		cout << "Good job, next word" << endl;
+		break;
+	} else {
+		mistakes++;
+	}
+}
+if (mistakes == 0) {
+	cout << "Hooray no mistakes :DD" << endl;
+} else if (mistakes == 1) {
+	cout << "You made one mistake :)" << endl;
+} else {
+	cout << "You made " << mistakes << " mistakes ;(" << endl;
+}
 
 }
