@@ -325,7 +325,48 @@ int main() {
 			cout.flush();
 		}
 
+		
 
+        while (battle == true) {
+            int choice = 0;
+            int loc = 3;
+            movecursor(loc, COLUMNS + 5);
+            loc++;
+            cout << WHITE << "What would you like to do?\n";
+            movecursor(loc, COLUMNS + 5);
+            loc++;
+            cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
+            cin >> choice;
+            if (choice == 1) {
+                movecursor(loc, COLUMNS + 5);
+                loc++;
+                cout << WHITE << "You chose to attack!" << endl;
+                movecursor(loc, COLUMNS + 5);
+                loc++;
+                cout << "Boss HP: " << firstBoss - Mario << endl;
+                movecursor(loc, COLUMNS + 5);
+                loc++;
+                if (firstBoss.curHealth <= 0) {
+                    OnBossDeath(firstBoss);
+                    battle = false;
+                    break;
+                }
+                cout << firstBoss.getName() << " Attacked you!\n";
+                movecursor(loc, COLUMNS + 5);
+                loc++;
+                cout << "Your HP: " << firstBoss + Mario << endl;
+                movecursor(loc, COLUMNS + 5);
+                loc++;
+                //This if statement is AI generated
+                if (Mario.curHealth <= 0) {
+                    OnDeath();
+                }
+            }    else if (choice == 2) {
+                movecursor(loc, COLUMNS + 5);
+                loc++;
+                cout << WHITE << "You chose to dodge!" << endl;
+            }
+        }
 
 		//WALL BARRIERS AND GATES
 		if (getLocation(rows, columns) == '-') { //Bottoms and tops
