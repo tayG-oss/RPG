@@ -497,7 +497,81 @@ int main() {
 
 
 					} else if (rows == 46 and columns == 38) {
-					//LOCK #2
+					//LOCK #2:
+					string word1 = "cabbage";
+					string w1;
+					string word2 = "abbreviation";
+					string w2;
+					string word3 = "discombobulated";
+					string w3;
+					string word4 = "deinstitutionalisation";
+					string w4;
+					int mistakes = 0;
+
+					cout << "Four words to unscramble...Good luck" << endl;
+
+					cout << "Unscramble aeagbcb" << endl;
+
+						while (true) {
+							cin >> w1;
+							for (char &c : w1) c = tolower(c);
+
+							if (w1 == word1) {
+								cout << "Good job, next word" << endl;
+								break;
+							} else {
+								mistakes++;
+							}
+						}
+
+						cout << "Unscramble nrvbeiiaobat" << endl;
+
+						while (true) {
+							cin >> w2;
+							for (char &c : w2) c = tolower(c);
+
+							if (w2 == word2) {
+								cout << "Good job, next word" << endl;
+								break;
+							} else {
+								mistakes++;
+							}
+						}
+
+						cout << "Unscramble toaoddbibesmcul" << endl;
+
+						while (true) {
+							cin >> w3;
+							for (char &c : w3) c = tolower(c);
+
+							if (w3 == word3) {
+								cout << "Good job, next word" << endl;
+								break;
+							} else {
+								mistakes++;
+							}
+						}
+
+						cout << "Unscramble ztonniiiotiseuditalant" << endl;
+
+						while (true) {
+							cin >> w4;
+							for (char &c : w4) c = tolower(c);
+
+							if (w4 == word4) {
+								cout << "Good job, next word" << endl;
+								break;
+							} else {
+								mistakes++;
+							}
+						}
+						if (mistakes == 0) {
+							cout << "Hooray no mistakes :DD" << endl;
+						} else if (mistakes == 1) {
+							cout << "You made one mistake :)" << endl;
+						} else {
+							cout << "You made " << mistakes << " mistakes ;(" << endl;
+						}
 					} else if (rows == 30 and columns == 36) {
 					//LOCK #3
 					} else if (rows == 33 and columns == 2) {
@@ -687,39 +761,6 @@ int main() {
 						movecursor(0, 0);
 						clearscreen();
 
-						int lowerBound = 1;
-						int upperBound = 6;
-						int numRectangles = 5;
-						int answer = 0;
-
-						double result;
-
-						result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
-
-						cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
-
-						int count = 0;
-
-
-//	No clue if an attempt limit will be added in future development, only added here for testing purposes
-
-
-						while (count != 3) {
-							cout << "Enter answer: ";
-							cin >> answer;
-							if (result == answer) {
-								cout << "Yippee you did it :DD" << endl;
-								return 0;
-							} else {
-								cout << "womp womp :(, try again" << endl;
-							}
-
-							count++;
-						}
-
-						if (count == 3) {
-							cout << "You failed, try again" << endl;
-						}
 
 
 						// puzzle 2:
@@ -943,80 +984,5 @@ int main() {
 			}
 		}
 
-// puzzle 3:
-		string word1 = "cabbage";
-		string w1;
-		string word2 = "abbreviation";
-		string w2;
-		string word3 = "discombobulated";
-		string w3;
-		string word4 = "deinstitutionalisation";
-		string w4;
-		int mistakes = 0;
-
-		cout << "Four words to unscramble...Good luck" << endl;
-
-		cout << "Unscramble aeagbcb" << endl;
-
-		while (true) {
-			cin >> w1;
-			for (char &c : w1) c = tolower(c);
-
-			if (w1 == word1) {
-				cout << "Good job, next word" << endl;
-				break;
-			} else {
-				mistakes++;
-			}
-		}
-
-		cout << "Unscramble nrvbeiiaobat" << endl;
-
-		while (true) {
-			cin >> w2;
-			for (char &c : w2) c = tolower(c);
-
-			if (w2 == word2) {
-				cout << "Good job, next word" << endl;
-				break;
-			} else {
-				mistakes++;
-			}
-		}
-
-		cout << "Unscramble toaoddbibesmcul" << endl;
-
-		while (true) {
-			cin >> w3;
-			for (char &c : w3) c = tolower(c);
-
-			if (w3 == word3) {
-				cout << "Good job, next word" << endl;
-				break;
-			} else {
-				mistakes++;
-			}
-		}
-
-		cout << "Unscramble ztonniiiotiseuditalant" << endl;
-
-		while (true) {
-			cin >> w4;
-			for (char &c : w4) c = tolower(c);
-
-			if (w4 == word4) {
-				cout << "Good job, next word" << endl;
-				break;
-			} else {
-				mistakes++;
-			}
-		}
-		if (mistakes == 0) {
-			cout << "Hooray no mistakes :DD" << endl;
-		} else if (mistakes == 1) {
-			cout << "You made one mistake :)" << endl;
-		} else {
-			cout << "You made " << mistakes << " mistakes ;(" << endl;
-		}
 
 	}
