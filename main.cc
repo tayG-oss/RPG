@@ -427,6 +427,7 @@ int main() {
 				movecursor(loc, COLUMNS + 5);
 				loc++;
 				cout << WHITE << "You chose to attack!" << endl;
+				cin.ignore();
 				movecursor(loc, COLUMNS + 5);
 				loc++;
 				cout << "Boss HP: " << firstBoss - Mario << endl;
@@ -455,6 +456,8 @@ int main() {
 			}
 		}
 
+
+
 		while (Villagerbattle == true) {
 			int choice = 0;
 			int loc = 3;
@@ -469,6 +472,7 @@ int main() {
 				movecursor(loc, COLUMNS + 5);
 				loc++;
 				cout << WHITE << "You chose to attack!" << endl;
+				cin.ignore();
 				movecursor(loc, COLUMNS + 5);
 				loc++;
 				cout << "Boss HP: " << villager % Mario << endl;
@@ -511,6 +515,7 @@ int main() {
 				movecursor(loc, COLUMNS + 5);
 				loc++;
 				cout << WHITE << "You chose to attack!" << endl;
+				cin.ignore();
 				movecursor(loc, COLUMNS + 5);
 				loc++;
 				cout << "Boss HP: " << secondBoss * Mario << endl;
@@ -835,6 +840,7 @@ int main() {
 					}
 				}
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "Unscramble nrvbeiiaobat" << endl;
 
 				while (true) {
@@ -843,6 +849,7 @@ int main() {
 
 					if (w2 == word2) {
 						movecursor(a + 1, COLUMNS + 5);
+						a += 1;
 						cout << "Good job, next word" << endl;
 						break;
 					} else {
@@ -858,6 +865,7 @@ int main() {
 
 					if (w3 == word3) {
 						movecursor(a + 1, COLUMNS + 5);
+						a += 1;
 						cout << "Good job, next word" << endl;
 						break;
 					} else {
@@ -865,6 +873,7 @@ int main() {
 					}
 				}
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "Unscramble ztonniiiotiseuditalant" << endl;
 
 				while (true) {
@@ -873,6 +882,7 @@ int main() {
 
 					if (w4 == word4) {
 						movecursor(a + 1, COLUMNS + 5);
+						a += 1;
 						cout << "Good job, no more words" << endl;
 						puzzle2 = true;
 						rows = 47;
@@ -917,18 +927,25 @@ int main() {
 					}
 				}
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "New Ruels: " << endl;
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "good luck :)" << endl;
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
 
 				while (attempts < max_attempts) {
@@ -957,7 +974,8 @@ int main() {
 			} else if (rows == 33 and columns == 2) {
 				//LOCK #4:
 				string word;
-				cout << "Enter a word:" << endl;
+				movecursor(2, COLUMNS + 5);
+				cout << "Enter a palindrome:" << endl;
 				cin >> word;
 				int a = 2;
 
@@ -969,11 +987,13 @@ int main() {
 
 				if (word == reversed) {
 					movecursor(a + 1, COLUMNS + 5);
+					a += 1;
 					cout << "Congrats, you know a word that's reversed." << endl;
 					puzzle4 = true;
 					rows = 34;
 				} else {
 					movecursor(a + 1, COLUMNS + 5);
+					a += 1;
 					cout << "you fail" << endl;
 				}
 			} else if (rows == 12 and columns == 20) {
@@ -989,22 +1009,26 @@ int main() {
 
 				// Puzzle #1:
 				movecursor(a + 1, COLUMNS + 5);
+				a += 1;
 				cout << "Using Left Riemann Sum, find the area under x^4 from 1 to 6 with 5 rectangles" << endl;
 
 				int count = 0;
 
 				while (count != 3) {
 					movecursor(a + 1, COLUMNS + 5);
+					a += 1;
 					cout << "Enter answer: ";
 					cin >> answer;
 					if (result == answer) {
 						movecursor(a + 1, COLUMNS + 5);
+						a += 1;
 						cout << "Yippee you did it :DD" << endl;
 						puzzle5 = true;
 						rows = 13;
 						break;
 					} else {
 						movecursor(a + 1, COLUMNS + 5);
+						a += 1;
 						cout << "womp womp :(, try again" << endl;
 					}
 
@@ -1013,6 +1037,7 @@ int main() {
 
 				if (count == 3) {
 					movecursor(a + 1, COLUMNS + 5);
+					a += 1;
 					cout << "You failed, try again" << endl;
 				}
 
