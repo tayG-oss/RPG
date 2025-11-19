@@ -508,7 +508,7 @@ int main() {
 				/*
 				if (getLocation(rows, columns) == 'L') { //Puzzle Locks
 					if (rows == 39 and columns == 15) {
-					//LOCK #1;
+					//LOCK #1; //  puzzle 5:
 					string ansRiddle;
 					string ans;
 					string ansActual = "an echo";
@@ -535,7 +535,38 @@ int main() {
 					} else if (rows == 33 and columns == 2) {
 					//LOCK #4
 					} else if (rows == 12 and columnd == 20) {
-					//LOCK #5
+					//LOCK #5:
+					int lowerBound = 1;
+					int upperBound = 6;
+					int numRectangles = 5;
+					int answer = 0;
+
+					double result;
+
+					result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
+
+					// Puzzle #1:
+					cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
+
+					int count = 0;
+					//  No clue if an attempt limit will be added in future development, only added here for testing
+					while (count != 3) {
+					cout << "Enter answer: ";
+					cin >> answer;
+					if (result == answer) {
+						cout << "Yippee you did it :DD" << endl;
+							break;
+					}else {
+						cout << "womp womp :(, try again" << endl;
+					}
+
+					count++;
+					}		
+
+					if (count == 3) {
+						cout << "You failed, try again" << endl;
+					}
+
 					}
 				}
 
