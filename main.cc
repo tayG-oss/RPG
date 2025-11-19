@@ -81,7 +81,7 @@ class playerCharacter {
 	string getName() const;
 	int getAttDamage() const;
 	int getHealth() const;
-
+	void levelUp(); //AI generated function
 	playerCharacter() {
 		maxHealth = 10;
 		attDamage = 10;
@@ -133,7 +133,22 @@ void OnDeath() {
 	cout << "YOU DIED\n";
 	exit(0);
 }
+//AI generated function
+void playerCharacter::levelUp() {
+        maxHealth += 5; // Increase max HP
+        curHealth = maxHealth; // Fully heal and set current HP to new max HP
+        attDamage += 2; // Increase attack damage
+        
+        // Output confirmation (optional, but good for user feedback)
+        cout << YELLOW << "\n*** " << name << " Leveled Up! ***" << RESET << endl;
+        cout << "Max HP increased to: " << maxHealth << endl;
+        cout << "Attack Damage increased to: " << attDamage << endl;
+    }
 
+//OnBossDeath is AI generated function
+void OnBossDeath(const Bosses& bos) {
+	cout << bos.getName() << " has been deafeated! Battle won!\n";
+}
 
 int operator- (Bosses& bos, playerCharacter& pla) {
 	bos.curHealth -= pla.attDamage;
@@ -286,6 +301,7 @@ int main() {
 	set_raw_mode(true);
 	show_cursor(false);
 
+
 	while (true) {
 		int c = toupper(quick_read());
 		barRow = rows;
@@ -298,7 +314,10 @@ int main() {
 			printMap(rows, columns);
 			prevRow = rows;
 			prevCol = columns;
-			movecursor(ROWS + 2, 0);
+			movecursor(12, COLUMNS + 5);
+			/*
+			cout << GREEN << "CURRENT HP: " << hp variable;
+			*/
 			cout << YELLOW << "ROW: " << rows << RED << " COL: " << columns << RESET; //Temporary line for positions
 			cout << YELLOW << " PREVROW: " << barRow << RED << " PREVCOL: " << barCol << RESET; //Temporary line for positions
 			movecursor(ROWS + 3, 0);
@@ -327,28 +346,25 @@ int main() {
 			} else if (columns == 0 or columns == 6 or columns == 18 or columns == 8 or columns == 19 or columns == 11 or columns == 14) columns++;
 			else if (columns == 40 or columns == 34 or columns == 22 or columns == 21 or columns == 29 or columns == 26 or columns == 32) columns--;
 
-		} /*else if (getLocation(rows, columns) == '*') { //Gates ( 53, 49, 38, 25, 11, 4)
-			if (completedTask == 1 && stage == 0) {
-				movecursor(2, COLUMNS + 5);
+		} else if (getLocation(rows, columns) == '*') { //Gates ( 53, 49, 38, 25, 11, 4)
+			movecursor(2, COLUMNS + 5);
+			if (completedTask == 1 && stage == 0 and rows == 53) {
 				cout << "The gate has been unlocked.\n";
-				for (int i = 0; i < 5; i++) setLocation(53 i + 18, ' ');
-			} else if (completedTask == 2 && stage == 0) {
-				movecursor(2, COLUMNS + 5);
-                cout << "The gate has been unlocked.\n";
-                for (int i = 0; i < 5; i++) setLocation(49, i + 18, ' ');
+				for (int i = 0; i < 5; i++) setLocation(53, i + 18, ' ');
+			} else if (completedTask == 2 and stage == 0 and rows == 49) {
+				cout << "The gate has been unlocked.\n";
+				for (int i = 0; i < 5; i++) setLocation(49, i + 18, ' ');
 				stage = 1;
-			} else if (completedTask == ... && stage == 1) {
-				movecursor(2, COLUMNS + 5);
-                cout << "The gate has been unlocked.\n";
-                for (int i = 0; i < 5; i++) setLocation(38, i + 18, ' ');
-                stage = 2;
+			} else if (completedTask == 4 && stage == 1 and rows == 38) {
+				cout << "The gate has been unlocked.\n";
+				for (int i = 0; i < 5; i++) setLocation(38, i + 18, ' ');
+				stage = 2;
 			} else {
 				rows++;
-				movecursor(2, COLUMNS + 5);
 				cout << "You cannot enter this area yet, the gate is locked.\n";
 				usleep(1'000'000);
 			}
-		} */
+		}
 
 		//CHARACTERS AND OBJECTS
 		if (getLocation(rows, columns) == 'D') { //End goal/Dragon is saved
@@ -358,7 +374,7 @@ int main() {
 			cout << "The dragon gives you a ride back to your small town village and you lived happily ever after!\n";
 			movecursor(4, COLUMNS + 5);
 			cout << WHITE << "Thank you for playing our game!\n";
-			usleep(5'000'000);
+			usleep(4'000'000);
 			break;
 		}
 
@@ -389,12 +405,44 @@ int main() {
 				movecursor(4, COLUMNS + 5);
 				cout << WHITE << "We don't need a random villager to take the gold reward. Leave this instant and go back to the village!\n";
 				completedTask = 2;
+			} else if (rows == 39 and columns == 23) {
+				cout << BOLDGREEN << "COMMANDER GOBLIN WITH POOR EYE-SIGHT:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "The gate closed on us right when we were storming the castle! The rest of the troops are on the other side.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "There's some locks somewhere, but I can't seem to find any. Maybe you can spot them for me?\n";
+				//completedTask = 2;
+			} else if (rows == 36 and columns == 20) {
+				cout << BOLDGREEN << "RELIEVED COMMANDER GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Oh thank goodness! You finally got the gate open!\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "The dragon is further up ahead, but there's more locks in the way. We need to hurry to get the gold!\n";
+				movecursor(5, COLUMNS + 5);
+				cout << WHITE << "Have this potion to heal yourself up! The more hands on deck, the quicker we can get the gold.\n";
+				//HP Heal
+				//completedTask = 2;
+			} else if (rows == 18 and columns == 20) {
+				cout << BOLDGREEN << "LAZY COMMANDER GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "The hero is just past this way. I don't want to deal with him.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Here kid, here's a healing potion. Take it and defeat the human hero for me.\n";
+				//HP Heal
+				//completedTask = 2;
+			} else if (rows == 9 and columns == 18) {
+				cout << BOLDGREEN << "SCARED COMMANDER GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Look man, I have no idea how I got this far. I do NOT want to be the one to deal with the princess.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "I do NOT want to die, so take this potion and deal with her for me.\n";
+				//HP Heal
 			}
 		}
 
-		if (getLocation(rows, columns) == 'g') {
+		if (getLocation(rows, columns) == 'g') { //Goblins
 			movecursor(2, COLUMNS + 5);
-			if (rows == 55 and columns == 6) { // STAGE 1 Goblins
+			if (rows == 55 and columns == 6) {
 				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "I really don't hate doing my job. But at the same time I hate the human princess even more, so...\n";
@@ -402,9 +450,6 @@ int main() {
 				cout << BOLDGREEN << "TIRED GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "Do you think we'll be done with this mission before 5 PM? I want to go home already.\n";
-
-			} else if (rows == 54 and columns == 31) {
-
 			} else if (rows == 54 and COLUMNS == 31) {
 				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
@@ -415,63 +460,53 @@ int main() {
 				cout << BOLDGREEN << "CONFUSED GOBLIN:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "What the heck am I doing here? I'm not even a soldier, I shouldn't be here.\n";
-			} else if (rows == 48 and columns == 15) { //STAGE 2 Goblins
+			} else if (rows == 48 and columns == 15) {
 				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "I've been trying to get farther into the castle, but the humans keep attacking me!\n";
+			} else if (rows == 44  and columns == 25) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER WHO'S NOT INTO ARSON:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "WE NEED TO SAVE THE DRAGON!!! THEN WE CAN BURN THE PRINCESS'S CASTLE!!!\n";
+				//AI GENERATED CODE FROM CO-PILOT
+			} else if (rows == 39 and columns == 2) {
+				cout << BOLDGREEN << "NERVOUS GOBLIN SCOUT:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "I saw something move in the shadows... I think the humans have a wizard!\n";
+			} else if (rows == 31 and columns == 29) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER WITH A PLAN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "If we sneak through the kitchen, we might reach the throne room undetected!\n";
+			} else if (rows == 27 and columns == 32) {
+				cout << BOLDGREEN << "EXHAUSTED GOBLIN VETERAN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "I've fought in three sieges and still haven't seen the dragon. Is it even real?\n";
+				//NO LONGER AI GENERATED CODE
+			} else if (rows == 26 and columns == 12) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "So are we gonna defeat the princess? Or like, actually kill her?\n";
+			} else if (rows == 29 and columns == 22) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER WHO MIGHT BE DYING:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Just because I have a sword stuck in my chest, DOES NOT MEAN that I'm dying.\n";
 			}
 		}
 
 		if (getLocation(rows, columns) == 'c') { //cat
+			movecursor(2, COLUMNS + 5);
 			if (rows == 50 and columns == 39) { // Outside cat
-				movecursor(2, COLUMNS + 5);
 				cout << BOLDRED << "SUSPICIOUS CAT:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "You should totally trust me when I say that there's a luck system.\n";
 				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "Anyways, you're luck has mysteriously gone down.\n";
+				cout << WHITE << "Anyways, your luck has mysteriously gone down.\n";
 			} else if (rows == 48 and columns == 1) {
-				movecursor(2, COLUMNS + 5);
 				cout << BOLDRED << "SUSPICIOUS CAT #2:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "Do you still believe that there's a luck system?\n";
 				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "Anyways, you're luck has increased by 5%.\n";
 
-			} else if (rows == 51 and COLUMNS == 26) {
-				cout << BOLDGREEN << "CONFUSED GOBLIN SOLDIER:\n";
-				movecursor(3, COLUMNS + 5);
-				cout << WHITE << "Do you think we'll be done with this mission before 5 PM? I want to go home already.\n";
-
-			}
-
-			if (getLocation(rows, columns) == 'c') { //cat
-				if (rows == 50 and columns == 39) { // Outside cat
-					movecursor(2, COLUMNS + 5);
-					cout << BOLDRED << "SUSPICIOUS CAT:\n";
-					movecursor(3, COLUMNS + 5);
-					cout << WHITE << "You should totally trust me when I say that there's a luck system.\n";
-					movecursor(4, COLUMNS + 5);
-					cout << WHITE << "Anyways, you're luck has mysteriously gone down.\n";
-				}
-
-				if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
-					movecursor(2, COLUMNS + 5);
-					if (rows == 37 and columns == 20) {
-						cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
-						movecursor(3, COLUMNS + 5);
-						cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
-						movecursor(4, COLUMNS + 5);
-						cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
-						completedTask = 1;
-					} else if (rows == 25 and columns == 23) {
-						cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
-						movecursor(3, COLUMNS + 5);
-						cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
-						movecursor(4, COLUMNS + 5);
-						cout << WHITE << "I'm not smart enough to unlock it though.\n";
-					}
-				}
 
 				/*
 				if (getLocation(rows, columns) == 'L') { //Puzzle Locks
@@ -682,135 +717,6 @@ int main() {
 					}
 				}
 
-				if (getLocation(rows, columns) == 'H') { //Hero encounter
-					movecursor (2, COLUMNS + 5);
-					cout << BOLDBLUE << "HERO OF THE HUMAN KINGDOM:\n";
-					movecursor(3, COLUMNS + 5);
-					cout << WHITE << "Temp dialoge\n";
-
-					//hero battle commences
-				}
-
-				if (getLocation(rows, columns) == 'P') { // Princess encounter
-					movecursor(2, COLUMNS + 5);
-					cout << BOLDYELLOW << "PRINCESS OF THE HUMAN KINGDOM:\n";
-					movecursor(3, COLUMNS + 5);
-					cout << WHITE << "temp dialoge\n";
-
-					//Princess battle commences
-				}
-				*/
-
-				while (battle == true) {
-					int choice = 0;
-					int loc = 3;
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << WHITE << "What would you like to do?\n";
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
-					cin >> choice;
-					if (choice == 1) {
-						movecursor(loc, COLUMNS + 5);
-						loc++;
-						cout << WHITE << "You chose to attack!" << endl;
-						movecursor(loc, COLUMNS + 5);
-						loc++;
-						cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
-						cin >> choice;
-						if (choice == 1) {
-							movecursor(loc, COLUMNS + 5);
-							loc++;
-							cout << WHITE << "You chose to attack!" << endl;
-							movecursor(loc, COLUMNS + 5);
-							loc++;
-							cout << "Boss HP: " << firstBoss - Mario << endl;
-							movecursor(loc, COLUMNS + 5);
-							loc++;
-							cout << firstBoss.getName() << " Attacked you!\n";
-							movecursor(loc, COLUMNS + 5);
-							loc++;
-							cout << "Your HP: " << firstBoss + Mario << endl;
-						} else if (choice == 2) {
-							movecursor(loc, COLUMNS + 5);
-							loc++;
-							cout << WHITE << "You chose to dodge!" << endl;
-
-						}
-
-						if (getLocation(rows, columns) == 'q') { //Guide or something (TBD)
-							movecursor(2, COLUMNS + 5);
-							if (rows == 37 and columns == 20) {
-								cout << BOLDBLUE << "CONCERNED GOBLIN:\n";
-								movecursor(3, COLUMNS + 5);
-								cout << WHITE << "Oh random villager! Please save the Dragon from the wicked, tyrannical princess!\n";
-								movecursor(4, COLUMNS + 5);
-								cout << WHITE << "If you don't, then the princess will take over our goblin village! And we'll no longer have a place to go!\n";
-								completedTask = 1;
-							} else if (rows == 25 and columns == 23) {
-								cout << BOLDBLUE << "PUZZLED GOBLIN:\n";
-								movecursor(3, COLUMNS + 5);
-								cout << WHITE << "There's a lock on the gate that's puzzle-activated.\n";
-								movecursor(4, COLUMNS + 5);
-								cout << WHITE << "I'm not smart enough to unlock it though.\n";
-							}
-						}
-
-						if (getLocation(rows, columns) == 'c') {
-							if (rows == 34 and columns == 1) {
-								movecursor(2, COLUMNS + 5);
-								cout << BOLDRED << "SUSPICIOUS CAT:\n";
-								movecursor(3, COLUMNS + 5);
-								cout << WHITE << "You should totally trust me when I say that there's a luck system./n";
-								movecursor(4, COLUMNS + 5);
-								cout << WHITE << "Anyways, you're luck has mysteriously gone down./n";
-							}
-
-
-						}
-
-
-						while (battle == true) {
-							int choice = 0;
-							int loc = 3;
-							movecursor(loc, COLUMNS + 5);
-							loc++;
-							cout << WHITE << "What would you like to do?\n";
-							movecursor(loc, COLUMNS + 5);
-							loc++;
-							cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
-							cin >> choice;
-							if (choice == 1) {
-								movecursor(loc, COLUMNS + 5);
-								loc++;
-								cout << WHITE << "You chose to attack!" << endl;
-								movecursor(loc, COLUMNS + 5);
-								loc++;
-								cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
-								cin >> choice;
-								if (choice == 1) {
-									movecursor(loc, COLUMNS + 5);
-									loc++;
-									cout << WHITE << "You chose to attack!" << endl;
-									movecursor(loc, COLUMNS + 5);
-									loc++;
-									cout << "Boss HP: " << firstBoss - Mario << endl;
-									movecursor(loc, COLUMNS + 5);
-									loc++;
-									cout << firstBoss.getName() << " Attacked you!\n";
-									movecursor(loc, COLUMNS + 5);
-									loc++;
-									cout << "Your HP: " << firstBoss + Mario << endl;
-								} else if (choice == 2) {
-									movecursor(loc, COLUMNS + 5);
-									loc++;
-									cout << WHITE << "You chose to dodge!" << endl;
-								}
-							}
-
-
-						}
 						set_raw_mode(false);
 						show_cursor(true);
 						movecursor(0, 0);
