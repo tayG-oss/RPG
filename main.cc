@@ -573,7 +573,62 @@ int main() {
 							cout << "You made " << mistakes << " mistakes ;(" << endl;
 						}
 					} else if (rows == 30 and columns == 36) {
-					//LOCK #3
+					//LOCK #3:
+							int start = 1;
+							int end = 30;
+							int attempts = 0;
+							int max_attempts = 5;
+							int mistake = 0;
+
+							vector<string> sequence(30);
+
+							for (int i = start; i <= end; i++) {
+								if (i % 15 == 0) {
+									sequence.at(i - 1) = "fizzbuzz";
+								} else if (i % 14 == 0) {
+									sequence.at(i - 1) = "3x + 2 = 44";
+								} else if (i % 13 == 0) {
+									sequence.at(i - 1) = "deurtuahtiang";
+								} else if (i % 11 == 0) {
+									sequence.at(i - 1) = "uh-lehvuhntean";
+								} else if (i % 5 == 0) {
+									sequence.at(i - 1) = "buzz";
+								} else if (i % 3 == 0) {
+									sequence.at(i - 1) = "fizz";
+								} else {
+									sequence.at(i - 1) = to_string(i);
+								}
+							}
+
+							cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
+							cout << "New Ruels: " << endl;
+							cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
+							cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
+							cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
+							cout << "good luck :)" << endl;
+							cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
+
+							while (attempts < max_attempts) {
+								for (int i = 0; i < sequence.size(); i++) {
+									string fb;
+									getline(cin, fb);
+									if (fb != sequence.at(i)) {
+										mistake++;
+									}
+								}
+
+								if (mistake == 0) {
+									cout << "Congrats, you did it!" << endl;
+									break;
+								} else {
+									attempts++;
+								}
+								if (attempts < max_attempts) {
+									cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
+								} else {
+									cout << "You failed the sequence :(...womp womp" << endl;
+								}
+							}
 					} else if (rows == 33 and columns == 2) {
 					//LOCK #4:
 						string word;
@@ -894,95 +949,7 @@ int main() {
 		movecursor(0, 0);
 		clearscreen();
 
-		int lowerBound = 1;
-		int upperBound = 6;
-		int numRectangles = 5;
-		int answer = 0;
 
-		double result;
-
-		result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
-
-		cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
-
-		int count = 0;
-
-
-		while (count != 3) {
-			cout << "Enter answer: ";
-			cin >> answer;
-			if (result == answer) {
-				cout << "Yippee you did it :DD" << endl;
-				return 0;
-			} else {
-
-				cout << "womp womp :(, try again" << endl;
-			}
-
-			count++;
-		}
-
-		if (count == 3) {
-			cout << "You failed, try again" << endl;
-		}
-
-
-// puzzle 2:
-		int start = 1;
-		int end = 30;
-		int attempts = 0;
-		int max_attempts = 5;
-		int mistake = 0;
-
-		vector<string> sequence(30);
-
-		for (int i = start; i <= end; i++) {
-			if (i % 15 == 0) {
-				sequence.at(i - 1) = "fizzbuzz";
-			} else if (i % 14 == 0) {
-				sequence.at(i - 1) = "3x + 2 = 44";
-			} else if (i % 13 == 0) {
-				sequence.at(i - 1) = "deurtuahtiang";
-			} else if (i % 11 == 0) {
-				sequence.at(i - 1) = "uh-lehvuhntean";
-			} else if (i % 5 == 0) {
-				sequence.at(i - 1) = "buzz";
-			} else if (i % 3 == 0) {
-				sequence.at(i - 1) = "fizz";
-			} else {
-				sequence.at(i - 1) = to_string(i);
-			}
-		}
-
-		cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
-		cout << "New Ruels: " << endl;
-		cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
-		cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
-		cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
-		cout << "good luck :)" << endl;
-		cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
-
-		while (attempts < max_attempts) {
-			for (int i = 0; i < sequence.size(); i++) {
-				string fb;
-				getline(cin, fb);
-				if (fb != sequence.at(i)) {
-					mistake++;
-				}
-			}
-
-			if (mistake == 0) {
-				cout << "Congrats, you did it!" << endl;
-				break;
-			} else {
-				attempts++;
-			}
-			if (attempts < max_attempts) {
-				cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
-			} else {
-				cout << "You failed the sequence :(...womp womp" << endl;
-			}
-		}
 
 
 	}
