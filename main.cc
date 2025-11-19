@@ -248,38 +248,6 @@ int main() {
 	movecursor(0, 0);
 	clearscreen();
 
-	/*int lowerBound = 1;
-	int upperBound = 6;
-	int numRectangles = 5;
-	int answer = 0;
-
-	double result;
-
-	result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
-
-	// Puzzle #1:
-	cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
-
-	int count = 0;
-
-
-	//  No clue if an attempt limit will be added in future development, only added here for testing
-	while (count != 3) {
-		cout << "Enter answer: ";
-		cin >> answer;
-		if (result == answer) {
-			cout << "Yippee you did it :DD" << endl;
-			return 0;
-		} else {
-			cout << "womp womp :(, try again" << endl;
-		}
-
-		count++;
-	}
-
-	if (count == 3) {
-		cout << "You failed, try again" << endl;
-	}*/
 
 	int userhealth, userAtt;
 	string userName;
@@ -533,7 +501,22 @@ int main() {
 					} else if (rows == 30 and columns == 36) {
 					//LOCK #3
 					} else if (rows == 33 and columns == 2) {
-					//LOCK #4
+					//LOCK #4:
+						string word;
+						cout << "Enter a word:" << endl;
+						cin >> word;
+
+						string reversed;
+
+						for (int i = word.size() - 1; i >= 0; i--) { // ai fixed for loop
+						reversed += word.at(i);
+						}
+
+						if (word == reversed) {
+							cout << "Congrats, you know a word that's reversed." << endl;
+						} else {
+							cout << "you fail" << endl;
+							}
 					} else if (rows == 12 and columnd == 20) {
 					//LOCK #5:
 					int lowerBound = 1;
@@ -546,10 +529,10 @@ int main() {
 					result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
 
 					// Puzzle #1:
-					cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
+					cout << "Using Left Riemann Sum, find the area under x^4 from 1 to 6 with 5 rectangles" << endl;
 
 					int count = 0;
-					//  No clue if an attempt limit will be added in future development, only added here for testing
+	
 					while (count != 3) {
 					cout << "Enter answer: ";
 					cin >> answer;
@@ -1034,42 +1017,6 @@ int main() {
 			cout << "You made one mistake :)" << endl;
 		} else {
 			cout << "You made " << mistakes << " mistakes ;(" << endl;
-		}
-// puzzle 4:
-		string word;
-		cout << "Enter a word:" << endl;
-		cin >> word;
-
-		string reversed;
-
-		for (int i = word.size() - 1; i >= 0; i--) { // ai fixed for loop
-			reversed += word.at(i);
-		}
-
-		if (word == reversed) {
-			cout << "Congrats, you know a word that's reversed." << endl;
-		} else {
-			cout << "you fail" << endl;
-		}
-
-// puzzle 5:
-		string ansRiddle;
-		string ans;
-		string ansActual = "an echo";
-		cout << "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?" << endl;
-
-		while (true) {
-			getline(cin, ans);
-			
-			for (char &c : ans) c = tolower(c);
-
-			if (ans==ansActual) {
-				cout << "you can pass" << endl;
-				break;
-			}
-			else {
-				cout << "no" << endl;
-			}
 		}
 
 	}
