@@ -81,7 +81,7 @@ class playerCharacter {
 	string getName() const;
 	int getAttDamage() const;
 	int getHealth() const;
-
+	void levelUp(); //AI generated function
 	playerCharacter() {
 		maxHealth = 10;
 		attDamage = 10;
@@ -133,7 +133,22 @@ void OnDeath() {
 	cout << "YOU DIED\n";
 	exit(0);
 }
+//AI generated function
+void playerCharacter::levelUp() {
+        maxHealth += 5; // Increase max HP
+        curHealth = maxHealth; // Fully heal and set current HP to new max HP
+        attDamage += 2; // Increase attack damage
+        
+        // Output confirmation (optional, but good for user feedback)
+        cout << YELLOW << "\n*** " << name << " Leveled Up! ***" << RESET << endl;
+        cout << "Max HP increased to: " << maxHealth << endl;
+        cout << "Attack Damage increased to: " << attDamage << endl;
+    }
 
+//OnBossDeath is AI generated function
+void OnBossDeath(const Bosses& bos) {
+	cout << bos.getName() << " has been deafeated! Battle won!\n";
+}
 
 int operator- (Bosses& bos, playerCharacter& pla) {
 	bos.curHealth -= pla.attDamage;
@@ -606,29 +621,38 @@ int main() {
 				cout << WHITE << "You chose to attack!" << endl;
 				movecursor(loc, COLUMNS + 5);
 				loc++;
-				cout << RED << "1) Attack " << BLUE << " 2) Dodge\n";
-				cin >> choice;
-				if (choice == 1) {
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << WHITE << "You chose to attack!" << endl;
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << "Boss HP: " << firstBoss - Mario << endl;
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << firstBoss.getName() << " Attacked you!\n";
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << "Your HP: " << firstBoss + Mario << endl;
-				} else if (choice == 2) {
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << WHITE << "You chose to dodge!" << endl;
+				cout << "Boss HP: " << firstBoss - Mario << endl;
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				if (firstBoss.curHealth <= 0) {
+					OnBossDeath(firstBoss);
+					battle = false;
+					break;
 				}
+				cout << firstBoss.getName() << " Attacked you!\n";
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << "Your HP: " << firstBoss + Mario << endl;
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				//This if statement is AI generated
+				if (Mario.curHealth <= 0) {
+					OnDeath();
+				}
+			}	 else if (choice == 2) {
+				movecursor(loc, COLUMNS + 5);
+				loc++;
+				cout << WHITE << "You chose to dodge!" << endl;
 			}
+		}
 
 
+
+
+	set_raw_mode(false);
+	show_cursor(true);
+	movecursor(0, 0);
+	clearscreen();
 		}
 		/*
 			set_raw_mode(false);
@@ -648,6 +672,9 @@ int main() {
 			cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
 
 			int count = 0;
+
+
+
 
 
 			//	No clue if an attempt limit will be added in future development, only added here for testing purposes
@@ -670,6 +697,49 @@ int main() {
 				cout << "You failed, try again" << endl;
 			}
 
+// puzzle 2:
+	int start = 1;
+	int end = 30;
+	int attempts = 0;
+	int max_attempts = 5;
+	int mistake = 0;
+
+	vector<string> sequence(30);
+
+	for (int i = start; i <= end; i++) {
+		if (i % 15 == 0) {
+			sequence.at(i - 1) = "fizzbuzz";
+		} else if (i % 14 == 0) {
+			sequence.at(i - 1) = "3x + 2 = 44";
+		} else if (i % 13 == 0) {
+			sequence.at(i - 1) = "deurtuahtiang";
+		} else if (i % 11 == 0) {
+			sequence.at(i - 1) = "uh-lehvuhntean";
+		} else if (i % 5 == 0) {
+			sequence.at(i - 1) = "buzz";
+		} else if (i % 3 == 0) {
+			sequence.at(i - 1) = "fizz";
+		} else {
+			sequence.at(i - 1) = to_string(i);
+		}
+	}
+
+	cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
+	cout << "New Ruels: " << endl;
+	cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
+	cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
+	cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
+	cout << "good luck :)" << endl;
+	cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
+
+	while (attempts < max_attempts) {
+		for (int i = 0; i < sequence.size(); i++) {
+			string fb;
+			getline(cin, fb);
+			if (fb != sequence.at(i)) {
+				mistake++;
+			}
+		}
 
 			// puzzle 2:
 			int start = 1;
@@ -743,8 +813,58 @@ cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" <<
 int count = 0;
 
 
+		if (mistake == 0) {
+			cout << "Congrats, you did it!" << endl;
+			break;
+		} else {
+			attempts++;
+		}
+		if (attempts < max_attempts) {
+			cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
+		} else {
+			cout << "You failed the sequence :(...womp womp" << endl;
+		}
+	}
 
+// puzzle 3:
+	string word1 = "cabbage";
+	string w1;
+	string word2 = "abbreviation";
+	string w2;
+	string word3 = "discombobulated";
+	string w3;
+	string word4 = "deinstitutionalisation";
+	string w4;
+	int mistakes = 0;
 
+	cout << "Four words to unscramble...Good luck" << endl;
+
+	cout << "Unscramble aeagbcb" << endl;
+
+	while (true) {
+		cin >> w1;
+		for (char &c : w1) c = tolower(c);
+
+		if (w1 == word1) {
+			cout << "Good job, next word" << endl;
+			break;
+		} else {
+			mistakes++;
+		}
+	}
+
+	cout << "Unscramble nrvbeiiaobat" << endl;
+
+	while (true) {
+		cin >> w2;
+		for (char &c : w2) c = tolower(c);
+
+		if (w2 == word2) {
+			cout << "Good job, next word" << endl;
+			break;
+		} else {
+			mistakes++;
+		}
 while (count != 3) {
 cout << "Enter answer: ";
 cin >> answer;
@@ -806,6 +926,19 @@ for (int i = 0; i < sequence.size(); i++) {
 	}
 }
 
+	cout << "Unscramble toaoddbibesmcul" << endl;
+
+	while (true) {
+		cin >> w3;
+		for (char &c : w3) c = tolower(c);
+
+		if (w3 == word3) {
+			cout << "Good job, next word" << endl;
+			break;
+		} else {
+			mistakes++;
+		}
+	}
 if (mistake == 0) {
 	cout << "Congrats, you did it!" << endl;
 	break;
@@ -860,8 +993,26 @@ if (w2 == word2) {
 }
 }
 
-cout << "Unscramble toaoddbibesmcul" << endl;
+	cout << "Unscramble ztonniiiotiseuditalant" << endl;
 
+	while (true) {
+		cin >> w4;
+		for (char &c : w4) c = tolower(c);
+
+		if (w4 == word4) {
+			cout << "Good job, next word" << endl;
+			break;
+		} else {
+			mistakes++;
+		}
+	}
+	if (mistakes == 0) {
+		cout << "Hooray no mistakes :DD" << endl;
+	} else if (mistakes == 1) {
+		cout << "You made one mistake :)" << endl;
+	} else {
+		cout << "You made " << mistakes << " mistakes ;(" << endl;
+	}
 while (true) {
 cin >> w3;
 for (char &c : w3) c = tolower(c);
