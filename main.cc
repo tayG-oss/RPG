@@ -818,44 +818,7 @@ int main() {
 
 
 
-						// puzzle 2:
-						int start = 1;
-						int end = 30;
-						int attempts = 0;
-						int max_attempts = 5;
-						int mistake = 0;
 
-						vector<string> sequence(30);
-
-						for (int i = start; i <= end; i++) {
-							if (i % 15 == 0) {
-								sequence.at(i - 1) = "fizzbuzz";
-							} else if (i % 14 == 0) {
-								sequence.at(i - 1) = "3x + 2 = 44";
-							} else if (i % 13 == 0) {
-								sequence.at(i - 1) = "deurtuahtiang";
-							} else if (i % 11 == 0) {
-								sequence.at(i - 1) = "uh-lehvuhntean";
-							} else if (i % 5 == 0) {
-								sequence.at(i - 1) = "buzz";
-							} else if (i % 3 == 0) {
-								sequence.at(i - 1) = "fizz";
-							} else {
-								sequence.at(i - 1) = to_string(i);
-
-								cout << "Boss HP: " << firstBoss - Mario << endl;
-								movecursor(loc, COLUMNS + 5);
-								loc++;
-								cout << firstBoss.getName() << " Attacked you!\n";
-								movecursor(loc, COLUMNS + 5);
-								loc++;
-								cout << "Your HP: " << firstBoss + Mario << endl;
-							} else if (choice == 2) {
-								movecursor(loc, COLUMNS + 5);
-								loc++;
-								cout << WHITE << "You chose to dodge!" << endl;
-							}
-						}
 
 					} // while }
 
@@ -866,79 +829,7 @@ int main() {
 					movecursor(0, 0);
 					clearscreen();
 
-					int lowerBound = 1;
-					int upperBound = 6;
-					int numRectangles = 5;
-					int answer = 0;
-
-					double result;
-
-					result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
-
-					cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
-
-					int count = 0;
-
-
-					while (count != 3) {
-						cout << "Enter answer: ";
-						cin >> answer;
-						if (result == answer) {
-							cout << "Yippee you did it :DD" << endl;
-							return 0;
-						} else {
-							cout << "womp womp :(, try again" << endl;
-						}
-
-						count++;
-					}
-				}
-
-				if (count == 3) {
-					cout << "You failed, try again" << endl;
-				}
-
-
-			}
-
-			// puzzle 2:
-			int start = 1;
-			int end = 30;
-			int attempts = 0;
-			int max_attempts = 5;
-			int mistake = 0;
-
-			vector<string> sequence(30);
-
-			for (int i = start; i <= end; i++) {
-				if (i % 15 == 0) {
-					sequence.at(i - 1) = "fizzbuzz";
-				} else if (i % 14 == 0) {
-					sequence.at(i - 1) = "3x + 2 = 44";
-				} else if (i % 13 == 0) {
-					sequence.at(i - 1) = "deurtuahtiang";
-				} else if (i % 11 == 0) {
-					sequence.at(i - 1) = "uh-lehvuhntean";
-				} else if (i % 5 == 0) {
-					sequence.at(i - 1) = "buzz";
-				} else if (i % 3 == 0) {
-					sequence.at(i - 1) = "fizz";
-				} else {
-					sequence.at(i - 1) = to_string(i);
-
-					cout << "Boss HP: " << firstBoss - Mario << endl;
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << firstBoss.getName() << " Attacked you!\n";
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << "Your HP: " << firstBoss + Mario << endl;
-				} else if (choice == 2) {
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << WHITE << "You chose to dodge!" << endl;
-				}
-			}
+			
 
 		} // while }
 
