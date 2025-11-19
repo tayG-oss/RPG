@@ -508,7 +508,26 @@ int main() {
 				/*
 				if (getLocation(rows, columns) == 'L') { //Puzzle Locks
 					if (rows == 39 and columns == 15) {
-					//LOCK #1
+					//LOCK #1;
+					string ansRiddle;
+					string ans;
+					string ansActual = "an echo";
+					cout << "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?" << endl;
+
+					while (true) {
+						getline(cin, ans);
+						for (char &c : ans) c = tolower(c);
+	
+						if (ans==ansActual) {
+						cout << "you can pass" << endl;
+						break;
+						}
+						else {
+						cout << "no" << endl;
+						}
+					}
+
+
 					} else if (rows == 46 and columns == 38) {
 					//LOCK #2
 					} else if (rows == 30 and columns == 36) {
