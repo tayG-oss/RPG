@@ -445,6 +445,7 @@ int main() {
 				cout << "Your HP: " << firstBoss + Mario << endl;
 				movecursor(loc, COLUMNS + 5);
 				loc++;
+				cout << firstBoss.getName() << " did " << firstBoss.getAttDamage() << endl;
 				//This if statement is AI generated
 				if (Mario.curHealth <= 0) {
 					OnDeath();
@@ -489,6 +490,7 @@ int main() {
 				cout << "Your HP: " << Mario.getHealth() << endl;
 				movecursor(loc, COLUMNS + 5);
 				loc++;
+				cout << "Villager did 0 damage!\n";
 				//This if statement is AI generated
 				if (Mario.curHealth <= 0) {
 					OnDeath();
@@ -533,6 +535,7 @@ int main() {
 				cout << "Your HP: " << secondBoss / Mario << endl;
 				movecursor(loc, COLUMNS + 5);
 				loc++;
+				cout << secondBoss.getName() << " did " << secondBoss.getAttDamage() << endl;
 				//This if statement is AI generated
 				if (Mario.curHealth <= 0) {
 					OnDeath();
