@@ -318,6 +318,7 @@ int main() {
 	set_raw_mode(true);
 	show_cursor(false);
 
+
 	while (true) {
 		int c = toupper(quick_read());
 		barRow = rows;
@@ -563,7 +564,7 @@ int main() {
 		int count = 0;
 
 
-//	No clue if an attempt limit will be added in future development, only added here for testing purposes
+		//	No clue if an attempt limit will be added in future development, only added here for testing purposes
 
 
 		while (count != 3) {
