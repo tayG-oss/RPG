@@ -1002,4 +1002,24 @@ int main() {
 			cout << "you fail" << endl;
 		}
 
+// puzzle 5:
+		string ansRiddle;
+		string ans;
+		string ansActual = "an echo";
+		cout << "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?" << endl;
+
+		while (true) {
+			getline(cin, ans);
+			
+			for (char &c : ans) c = tolower(c);
+
+			if (ans==ansActual) {
+				cout << "you can pass" << endl;
+				break;
+			}
+			else {
+				cout << "no" << endl;
+			}
+		}
+
 	}
