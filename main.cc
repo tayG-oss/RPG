@@ -421,12 +421,26 @@ int main() {
 				movecursor(4, COLUMNS + 5);
 				cout << WHITE << "We don't need a random villager to take the gold reward. Leave this instant and go back to the village!\n";
 				completedTask = 2;
+			} else if (rows == 39 and columns == 23) {
+				cout << BOLDGREEN << "COMMANDER GOBLIN WITH POOR EYE-SIGHT:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "The gate closed on us right when we were storming the castle! The rest of the troops are on the other side.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "There's some locks somewhere, but I can't seem to find any. Maybe you can spot them for me?\n";
+				//completedTask = 2;
+			} else if (rows == 36 and columns == 20) {
+				cout << BOLDGREEN << "RELIEVED COMMANDER GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Oh thank goodness! You finally got the gate open!\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "The dragon is further up ahead, but there's more locks in the way. We need to hurry to get the gold!\n";
+				//completedTask = 2;
 			}
 		}
 
-		if (getLocation(rows, columns) == 'g') {
+		if (getLocation(rows, columns) == 'g') { //Goblins
 			movecursor(2, COLUMNS + 5);
-			if (rows == 55 and columns == 6) { // STAGE 1 Goblins
+			if (rows == 55 and columns == 6) {
 				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "I really don't hate doing my job. But at the same time I hate the human princess even more, so...\n";
@@ -444,28 +458,81 @@ int main() {
 				cout << BOLDGREEN << "CONFUSED GOBLIN:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "What the heck am I doing here? I'm not even a soldier, I shouldn't be here.\n";
-			} else if (rows == 48 and columns == 15) { //STAGE 2 Goblins
+			} else if (rows == 48 and columns == 15) {
 				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "I've been trying to get farther into the castle, but the humans keep attacking me!\n";
+			} else if (rows == 44  and columns == 25) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER WHO'S NOT INTO ARSON:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "WE NEED TO SAVE THE DRAGON!!! THEN WE CAN BURN THE PRINCESS'S CASTLE!!!\n";
+				//AI GENERATED CODE FROM CO-PILOT
+			} else if (rows == 39 and columns == 2) {
+				cout << BOLDGREEN << "NERVOUS GOBLIN SCOUT:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "I saw something move in the shadows... I think the humans have a wizard!\n";
+			} else if (rows == 31 and columns == 29) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER WITH A PLAN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "If we sneak through the kitchen, we might reach the throne room undetected!\n";
+			} else if (rows == 27 and columns == 32) {
+				cout << BOLDGREEN << "EXHAUSTED GOBLIN VETERAN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "I've fought in three sieges and still haven't seen the dragon. Is it even real?\n";
+				//NO LONGER AI GENERATED CODE
+			} else if (rows == 26 and columns == 12) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "So are we gonna defeat the princess? Or like, actually kill her?\n";
+			} else if (rows == 29 and columns == 22) {
+				cout << BOLDGREEN << "GOBLIN SOLDIER WHO MIGHT BE DYING:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Just because I have a sword stuck in my chest, DOES NOT MEAN that I'm dying.\n";
 			}
 		}
 
 		if (getLocation(rows, columns) == 'c') { //cat
+			movecursor(2, COLUMNS + 5);
 			if (rows == 50 and columns == 39) { // Outside cat
-				movecursor(2, COLUMNS + 5);
 				cout << BOLDRED << "SUSPICIOUS CAT:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "You should totally trust me when I say that there's a luck system.\n";
 				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "Anyways, you're luck has mysteriously gone down.\n";
+				cout << WHITE << "Anyways, your luck has mysteriously gone down.\n";
 			} else if (rows == 48 and columns == 1) {
-				movecursor(2, COLUMNS + 5);
 				cout << BOLDRED << "SUSPICIOUS CAT #2:\n";
 				movecursor(3, COLUMNS + 5);
 				cout << WHITE << "Do you still believe that there's a luck system?\n";
 				movecursor(4, COLUMNS + 5);
-				cout << WHITE << "Anyways, you're luck has increased by 5%.\n";
+				cout << WHITE << "Anyways, your luck has increased by 5%.\n";
+			} else if (rows == 30 and columns == 1) {
+				cout << BOLDRED << "SUSPICIOUS CAT #3:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "The luck system is real and you should believe in it. Aliens are real too.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Anyways, your luck did not change whatsoever.\n";
+			} else if (rows == 21 and columns == 28) {
+				cout << BOLDRED << "SUSPICIOUS CAT #4:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "There is no luck system. And there never was.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Anyways, your luck has decreased by 10%.\n";
+			} else if (rows == 16 and columns == 31) {
+				cout << BOLDRED << "SUSPICIOUS CAT #5:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "You've made it so far! Even without using the luck system!\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Anyways, your luck has been multiplied by 0.\n";
+			} else if (rows == 1 and columns == 15) {
+				cout << BOLDRED << "SUSPICIOUS CAT #6:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Why did you go to the cat before the dragon?\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Anyways, since you went to the cat, you don't get to save the dragon.\n";
+				movecursor(5, COLUMNS + 5);
+				cout << WHITE << "Thanks for playing!!! <3\n";
+				usleep(4'000'000);
+				break;
 			}
 
 		}
@@ -488,9 +555,9 @@ int main() {
 
 		if (getLocation(rows, columns) == 'H') { //Hero encounter
 			movecursor (2, COLUMNS + 5);
-			cout << BOLDBLUE << "HERO OF THE HUMAN KINGDOM:\n";
+			cout << BOLDRED << "HERO OF THE HUMAN KINGDOM:\n";
 			movecursor(3, COLUMNS + 5);
-			cout << WHITE << "Temp dialoge\n";
+			cout << WHITE << "I will not let you harm the princess. I will kill you before you even get the chance.\n";
 
 			//hero battle commences
 		}
@@ -499,8 +566,9 @@ int main() {
 			movecursor(2, COLUMNS + 5);
 			cout << BOLDYELLOW << "PRINCESS OF THE HUMAN KINGDOM:\n";
 			movecursor(3, COLUMNS + 5);
-			cout << WHITE << "temp dialoge\n";
-
+			cout << WHITE << "Oh, someone actually managed to reach this far. But that doesn't matter now, does it?";
+			movecursor(4, COLUMNS + 5);
+		    cout << WHITE << "This is where you will breath your last breath.";
 			//Princess battle commences
 		}
 		*/
@@ -545,263 +613,269 @@ int main() {
 
 
 		}
-		set_raw_mode(false);
-		show_cursor(true);
-		movecursor(0, 0);
-		clearscreen();
+		/*
+			set_raw_mode(false);
+			show_cursor(true);
+			movecursor(0, 0);
+			clearscreen();
 
-		int lowerBound = 1;
-		int upperBound = 6;
-		int numRectangles = 5;
-		int answer = 0;
+			int lowerBound = 1;
+			int upperBound = 6;
+			int numRectangles = 5;
+			int answer = 0;
 
-		double result;
+			double result;
 
-		result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
+			result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
 
-		cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
+			cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
 
-		int count = 0;
-
-
-		//	No clue if an attempt limit will be added in future development, only added here for testing purposes
+			int count = 0;
 
 
-		while (count != 3) {
-			cout << "Enter answer: ";
-			cin >> answer;
-			if (result == answer) {
-				cout << "Yippee you did it :DD" << endl;
-				return 0;
-			} else {
-				cout << "womp womp :(, try again" << endl;
+			//	No clue if an attempt limit will be added in future development, only added here for testing purposes
+
+
+			while (count != 3) {
+				cout << "Enter answer: ";
+				cin >> answer;
+				if (result == answer) {
+					cout << "Yippee you did it :DD" << endl;
+					return 0;
+				} else {
+					cout << "womp womp :(, try again" << endl;
+				}
+
+				count++;
 			}
 
-			count++;
-		}
-
-		if (count == 3) {
-			cout << "You failed, try again" << endl;
-		}
-
-
-		// puzzle 2:
-		int start = 1;
-		int end = 30;
-		int attempts = 0;
-		int max_attempts = 5;
-		int mistake = 0;
-
-		vector<string> sequence(30);
-
-		for (int i = start; i <= end; i++) {
-			if (i % 15 == 0) {
-				sequence.at(i - 1) = "fizzbuzz";
-			} else if (i % 14 == 0) {
-				sequence.at(i - 1) = "3x + 2 = 44";
-			} else if (i % 13 == 0) {
-				sequence.at(i - 1) = "deurtuahtiang";
-			} else if (i % 11 == 0) {
-				sequence.at(i - 1) = "uh-lehvuhntean";
-			} else if (i % 5 == 0) {
-				sequence.at(i - 1) = "buzz";
-			} else if (i % 3 == 0) {
-				sequence.at(i - 1) = "fizz";
-				/*} else {
-					sequence.at(i - 1) = to_string(i);
-
-					cout << "Boss HP: " << firstBoss - Mario << endl;
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << firstBoss.getName() << " Attacked you!\n";
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << "Your HP: " << firstBoss + Mario << endl;
-
-				} else if (choice == 2) {
-					movecursor(loc, COLUMNS + 5);
-					loc++;
-					cout << WHITE << "You chose to dodge!" << endl;
-				*/
+			if (count == 3) {
+				cout << "You failed, try again" << endl;
 			}
-		}
-
-	} // while }
 
 
+			// puzzle 2:
+			int start = 1;
+			int end = 30;
+			int attempts = 0;
+			int max_attempts = 5;
+			int mistake = 0;
+
+			vector<string> sequence(30);
+
+			for (int i = start; i <= end; i++) {
+				if (i % 15 == 0) {
+					sequence.at(i - 1) = "fizzbuzz";
+				} else if (i % 14 == 0) {
+					sequence.at(i - 1) = "3x + 2 = 44";
+				} else if (i % 13 == 0) {
+					sequence.at(i - 1) = "deurtuahtiang";
+				} else if (i % 11 == 0) {
+					sequence.at(i - 1) = "uh-lehvuhntean";
+				} else if (i % 5 == 0) {
+					sequence.at(i - 1) = "buzz";
+				} else if (i % 3 == 0) {
+					sequence.at(i - 1) = "fizz";
+					} else {
+						sequence.at(i - 1) = to_string(i);
+
+						cout << "Boss HP: " << firstBoss - Mario << endl;
+						movecursor(loc, COLUMNS + 5);
+						loc++;
+						cout << firstBoss.getName() << " Attacked you!\n";
+						movecursor(loc, COLUMNS + 5);
+						loc++;
+						cout << "Your HP: " << firstBoss + Mario << endl;
+
+					} else if (choice == 2) {
+						movecursor(loc, COLUMNS + 5);
+						loc++;
+						cout << WHITE << "You chose to dodge!" << endl;
+
+					}
+			}
+
+		*/
+	} // while
 
 	set_raw_mode(false);
 	show_cursor(true);
 	movecursor(0, 0);
 	clearscreen();
 
-	int lowerBound = 1;
-	int upperBound = 6;
-	int numRectangles = 5;
-	int answer = 0;
-
-	double result;
-
-	result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
-
-	cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
-
-	int count = 0;
+}
+/*
 
 
+set_raw_mode(false);
+show_cursor(true);
+movecursor(0, 0);
+clearscreen();
+
+int lowerBound = 1;
+int upperBound = 6;
+int numRectangles = 5;
+int answer = 0;
+
+double result;
+
+result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
+
+cout << "Using Left Riemann Sum, integrate x^4 from 1 to 6 with 5 rectangles" << endl;
+
+int count = 0;
 
 
 
 
+while (count != 3) {
+cout << "Enter answer: ";
+cin >> answer;
+if (result == answer) {
+	cout << "Yippee you did it :DD" << endl;
+	return 0;
+} else {
+	cout << "womp womp :(, try again" << endl;
+}
 
-	while (count != 3) {
-		cout << "Enter answer: ";
-		cin >> answer;
-		if (result == answer) {
-			cout << "Yippee you did it :DD" << endl;
-			return 0;
-		} else {
-			cout << "womp womp :(, try again" << endl;
-		}
+count++;
+}
 
-		count++;
-	}
-
-	if (count == 3) {
-		cout << "You failed, try again" << endl;
-	}
+if (count == 3) {
+cout << "You failed, try again" << endl;
+}
 
 // puzzle 2:
-	int start = 1;
-	int end = 30;
-	int attempts = 0;
-	int max_attempts = 5;
-	int mistake = 0;
+int start = 1;
+int end = 30;
+int attempts = 0;
+int max_attempts = 5;
+int mistake = 0;
 
-	vector<string> sequence(30);
+vector<string> sequence(30);
 
-	for (int i = start; i <= end; i++) {
-		if (i % 15 == 0) {
-			sequence.at(i - 1) = "fizzbuzz";
-		} else if (i % 14 == 0) {
-			sequence.at(i - 1) = "3x + 2 = 44";
-		} else if (i % 13 == 0) {
-			sequence.at(i - 1) = "deurtuahtiang";
-		} else if (i % 11 == 0) {
-			sequence.at(i - 1) = "uh-lehvuhntean";
-		} else if (i % 5 == 0) {
-			sequence.at(i - 1) = "buzz";
-		} else if (i % 3 == 0) {
-			sequence.at(i - 1) = "fizz";
-		} else {
-			sequence.at(i - 1) = to_string(i);
-		}
+for (int i = start; i <= end; i++) {
+if (i % 15 == 0) {
+	sequence.at(i - 1) = "fizzbuzz";
+} else if (i % 14 == 0) {
+	sequence.at(i - 1) = "3x + 2 = 44";
+} else if (i % 13 == 0) {
+	sequence.at(i - 1) = "deurtuahtiang";
+} else if (i % 11 == 0) {
+	sequence.at(i - 1) = "uh-lehvuhntean";
+} else if (i % 5 == 0) {
+	sequence.at(i - 1) = "buzz";
+} else if (i % 3 == 0) {
+	sequence.at(i - 1) = "fizz";
+} else {
+	sequence.at(i - 1) = to_string(i);
+}
+}
+
+cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
+cout << "New Ruels: " << endl;
+cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
+cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
+cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
+cout << "good luck :)" << endl;
+cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
+
+while (attempts < max_attempts) {
+for (int i = 0; i < sequence.size(); i++) {
+	string fb;
+	getline(cin, fb);
+	if (fb != sequence.at(i)) {
+		mistake++;
 	}
+}
 
-	cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
-	cout << "New Ruels: " << endl;
-	cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
-	cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
-	cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
-	cout << "good luck :)" << endl;
-	cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
-
-	while (attempts < max_attempts) {
-		for (int i = 0; i < sequence.size(); i++) {
-			string fb;
-			getline(cin, fb);
-			if (fb != sequence.at(i)) {
-				mistake++;
-			}
-		}
-
-		if (mistake == 0) {
-			cout << "Congrats, you did it!" << endl;
-			break;
-		} else {
-			attempts++;
-		}
-		if (attempts < max_attempts) {
-			cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
-		} else {
-			cout << "You failed the sequence :(...womp womp" << endl;
-		}
-	}
+if (mistake == 0) {
+	cout << "Congrats, you did it!" << endl;
+	break;
+} else {
+	attempts++;
+}
+if (attempts < max_attempts) {
+	cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
+} else {
+	cout << "You failed the sequence :(...womp womp" << endl;
+}
+}
 
 // puzzle 3:
-	string word1 = "cabbage";
-	string w1;
-	string word2 = "abbreviation";
-	string w2;
-	string word3 = "discombobulated";
-	string w3;
-	string word4 = "deinstitutionalisation";
-	string w4;
-	int mistakes = 0;
+string word1 = "cabbage";
+string w1;
+string word2 = "abbreviation";
+string w2;
+string word3 = "discombobulated";
+string w3;
+string word4 = "deinstitutionalisation";
+string w4;
+int mistakes = 0;
 
-	cout << "Four words to unscramble...Good luck" << endl;
+cout << "Four words to unscramble...Good luck" << endl;
 
-	cout << "Unscramble aeagbcb" << endl;
+cout << "Unscramble aeagbcb" << endl;
 
-	while (true) {
-		cin >> w1;
-		for (char &c : w1) c = tolower(c);
+while (true) {
+cin >> w1;
+for (char &c : w1) c = tolower(c);
 
-		if (w1 == word1) {
-			cout << "Good job, next word" << endl;
-			break;
-		} else {
-			mistakes++;
-		}
-	}
-
-	cout << "Unscramble nrvbeiiaobat" << endl;
-
-	while (true) {
-		cin >> w2;
-		for (char &c : w2) c = tolower(c);
-
-		if (w2 == word2) {
-			cout << "Good job, next word" << endl;
-			break;
-		} else {
-			mistakes++;
-		}
-	}
-
-	cout << "Unscramble toaoddbibesmcul" << endl;
-
-	while (true) {
-		cin >> w3;
-		for (char &c : w3) c = tolower(c);
-
-		if (w3 == word3) {
-			cout << "Good job, next word" << endl;
-			break;
-		} else {
-			mistakes++;
-		}
-	}
-
-	cout << "Unscramble ztonniiiotiseuditalant" << endl;
-
-	while (true) {
-		cin >> w4;
-		for (char &c : w4) c = tolower(c);
-
-		if (w4 == word4) {
-			cout << "Good job, next word" << endl;
-			break;
-		} else {
-			mistakes++;
-		}
-	}
-	if (mistakes == 0) {
-		cout << "Hooray no mistakes :DD" << endl;
-	} else if (mistakes == 1) {
-		cout << "You made one mistake :)" << endl;
-	} else {
-		cout << "You made " << mistakes << " mistakes ;(" << endl;
-	}
-
+if (w1 == word1) {
+	cout << "Good job, next word" << endl;
+	break;
+} else {
+	mistakes++;
 }
+}
+
+cout << "Unscramble nrvbeiiaobat" << endl;
+
+while (true) {
+cin >> w2;
+for (char &c : w2) c = tolower(c);
+
+if (w2 == word2) {
+	cout << "Good job, next word" << endl;
+	break;
+} else {
+	mistakes++;
+}
+}
+
+cout << "Unscramble toaoddbibesmcul" << endl;
+
+while (true) {
+cin >> w3;
+for (char &c : w3) c = tolower(c);
+
+if (w3 == word3) {
+	cout << "Good job, next word" << endl;
+	break;
+} else {
+	mistakes++;
+}
+}
+
+cout << "Unscramble ztonniiiotiseuditalant" << endl;
+
+while (true) {
+cin >> w4;
+for (char &c : w4) c = tolower(c);
+
+if (w4 == word4) {
+	cout << "Good job, next word" << endl;
+	break;
+} else {
+	mistakes++;
+}
+}
+if (mistakes == 0) {
+cout << "Hooray no mistakes :DD" << endl;
+} else if (mistakes == 1) {
+cout << "You made one mistake :)" << endl;
+} else {
+cout << "You made " << mistakes << " mistakes ;(" << endl;
+}
+*/
+
