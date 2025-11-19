@@ -404,7 +404,7 @@ int main() {
 				cout << WHITE << "Do you think we'll be done with this mission before 5 PM? I want to go home already.\n";
 
 			} else if (rows == 54 and columns == 31) {
-		
+
 			} else if (rows == 54 and COLUMNS == 31) {
 				cout << BOLDGREEN << "GOBLIN SOLDIER:\n";
 				movecursor(3, COLUMNS + 5);
@@ -485,7 +485,7 @@ int main() {
 					while (true) {
 						getline(cin, ans);
 						for (char &c : ans) c = tolower(c);
-	
+
 						if (ans==ansActual) {
 						cout << "you can pass" << endl;
 						break;
@@ -661,7 +661,7 @@ int main() {
 					cout << "Using Left Riemann Sum, find the area under x^4 from 1 to 6 with 5 rectangles" << endl;
 
 					int count = 0;
-	
+
 					while (count != 3) {
 					cout << "Enter answer: ";
 					cin >> answer;
@@ -673,7 +673,7 @@ int main() {
 					}
 
 					count++;
-					}		
+					}
 
 					if (count == 3) {
 						cout << "You failed, try again" << endl;
@@ -816,31 +816,5 @@ int main() {
 						movecursor(0, 0);
 						clearscreen();
 
+			}
 
-
-
-
-					} // while }
-
-
-
-					set_raw_mode(false);
-					show_cursor(true);
-					movecursor(0, 0);
-					clearscreen();
-
-			
-
-		} // while }
-
-
-
-		set_raw_mode(false);
-		show_cursor(true);
-		movecursor(0, 0);
-		clearscreen();
-
-
-
-
-	}
