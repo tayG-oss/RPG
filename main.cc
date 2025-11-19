@@ -385,7 +385,11 @@ int main() {
 	bool realBossbattle = false;
 	bool Villagerbattle = false;
 	bool stageClear = false; //Whether or not the player has meet the requirements to move on
-
+	bool puzzle1 = false;
+	bool puzzle2 = false;
+	bool puzzle3 = false;
+	bool puzzle4 = false;
+	bool puzzle5 = false;
 	set_raw_mode(true);
 	show_cursor(false);
 
@@ -403,14 +407,12 @@ int main() {
 			prevRow = rows;
 			prevCol = columns;
 			movecursor(12, COLUMNS + 5);
-			movecursor(ROWS + 3, 0);
-			cout << YELLOW << "STAGE: " << stage << RED << " Tasks completed: " << completedTask << RESET; //Temporary line for positions
 			cout.flush();
 		}
 
 
 
-
+		bool defeatH = false;
 		while (Bossbattle == true) {
 			int choice = 0;
 			int loc = 3;
@@ -431,6 +433,7 @@ int main() {
 				movecursor(loc, COLUMNS + 5);
 				loc++;
 				if (firstBoss.curHealth <= 0) {
+					defeatH = true;
 					OnBossDeath(firstBoss);
 					Bossbattle = false;
 					break;
@@ -493,7 +496,7 @@ int main() {
 			}
 		}
 
-
+		bool defeat = false;
 		while (realBossbattle == true) {
 			int choice = 0;
 			int loc = 3;
@@ -514,6 +517,7 @@ int main() {
 				movecursor(loc, COLUMNS + 5);
 				loc++;
 				if (secondBoss.curHealth <= 0) {
+					defeat = true;
 					OnRealBossDeath(secondBoss);
 					realBossbattle = false;
 					break;
@@ -563,10 +567,20 @@ int main() {
 				cout << "The gate has been unlocked.\n";
 				for (int i = 0; i < 5; i++) setLocation(49, i + 18, ' ');
 				stage = 1;
-			} else if (completedTask == 4 && stage == 1 and rows == 38) {
+			} else if (puzzle1 == true and puzzle2 == true and stage == 1 and rows == 38) {
 				cout << "The gate has been unlocked.\n";
 				for (int i = 0; i < 5; i++) setLocation(38, i + 18, ' ');
 				stage = 2;
+			} else if (puzzle3 == true and puzzle4 == true and stage == 2 and rows == 25) {
+				cout << "The gate has been unlocked.\n";
+				for (int i = 0; i < 5; i++) setLocation(25, i + 18, ' ');
+				stage = 3;
+			} else if (defeatH == true and puzzle5 == true and stage == 3 and rows == 11) {
+				cout << "The gate has been unlocked.\n";
+				for (int i = 0; i < 5; i++) setLocation(11, i + 18, ' ');
+			} else if (defeat == true and rows == 4) {
+				cout << "The gate has been unlocked.\n";
+				for (int i = 0; i < 5; i++) setLocation(4, i + 18, ' ');
 			} else {
 				rows++;
 				cout << "You cannot enter this area yet, the gate is locked.\n";
@@ -766,57 +780,61 @@ int main() {
 			}
 		}
 
-		/*
+
 		if (getLocation(rows, columns) == 'L') { //Puzzle Locks
 			if (rows == 39 and columns == 15) {
-			//LOCK #1; //  puzzle 5:
-			string ansRiddle;
-			string ans;
-			string ansActual = "an echo";
-			cout << "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?" << endl;
+				//LOCK #1; //  puzzle 5:
+				string ansRiddle;
+				string ans;
+				string ansActual = "an echo";
+				movecursor(2, COLUMNS + 5);
+				cout << "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?" << endl;
 
-			while (true) {
-				getline(cin, ans);
-				for (char &c : ans) c = tolower(c);
+				while (true) {
+					getline(cin, ans);
+					for (char &c : ans) c = tolower(c);
 
-				if (ans==ansActual) {
-				cout << "you can pass" << endl;
-				break;
+					if (ans == ansActual) {
+						movecursor(3, COLUMNS + 5);
+						cout << "you can pass" << endl;
+						break;
+					} else {
+						movecursor(3, COLUMNS + 5);
+						cout << "no" << endl;
+					}
 				}
-				else {
-				cout << "no" << endl;
-				}
-			}
-
+				rows = 40;
+				puzzle1 = true;
 
 			} else if (rows == 46 and columns == 38) {
-			//LOCK #2:
-			string word1 = "cabbage";
-			string w1;
-			string word2 = "abbreviation";
-			string w2;
-			string word3 = "discombobulated";
-			string w3;
-			string word4 = "deinstitutionalisation";
-			string w4;
-			int mistakes = 0;
-
-			cout << "Four words to unscramble...Good luck" << endl;
-
-			cout << "Unscramble aeagbcb" << endl;
+				//LOCK #2:
+				int a = 3;
+				string word1 = "cabbage";
+				string w1;
+				string word2 = "abbreviation";
+				string w2;
+				string word3 = "discombobulated";
+				string w3;
+				string word4 = "deinstitutionalisation";
+				string w4;
+				int mistakes = 0;
+				movecursor(2, COLUMNS + 5);
+				cout << "Four words to unscramble...Good luck" << endl;
+				movecursor(a, COLUMNS + 5);
+				cout << "Unscramble aeagbcb" << endl;
 
 				while (true) {
 					cin >> w1;
 					for (char &c : w1) c = tolower(c);
-
 					if (w1 == word1) {
+						movecursor(a + 1, COLUMNS + 5);
 						cout << "Good job, next word" << endl;
 						break;
 					} else {
 						mistakes++;
 					}
 				}
-
+				movecursor(a + 1, COLUMNS + 5);
 				cout << "Unscramble nrvbeiiaobat" << endl;
 
 				while (true) {
@@ -824,13 +842,14 @@ int main() {
 					for (char &c : w2) c = tolower(c);
 
 					if (w2 == word2) {
+						movecursor(a + 1, COLUMNS + 5);
 						cout << "Good job, next word" << endl;
 						break;
 					} else {
 						mistakes++;
 					}
 				}
-
+				movecursor(a + 1, COLUMNS + 5);
 				cout << "Unscramble toaoddbibesmcul" << endl;
 
 				while (true) {
@@ -838,13 +857,14 @@ int main() {
 					for (char &c : w3) c = tolower(c);
 
 					if (w3 == word3) {
+						movecursor(a + 1, COLUMNS + 5);
 						cout << "Good job, next word" << endl;
 						break;
 					} else {
 						mistakes++;
 					}
 				}
-
+				movecursor(a + 1, COLUMNS + 5);
 				cout << "Unscramble ztonniiiotiseuditalant" << endl;
 
 				while (true) {
@@ -852,7 +872,10 @@ int main() {
 					for (char &c : w4) c = tolower(c);
 
 					if (w4 == word4) {
-						cout << "Good job, next word" << endl;
+						movecursor(a + 1, COLUMNS + 5);
+						cout << "Good job, no more words" << endl;
+						puzzle2 = true;
+						rows = 47;
 						break;
 					} else {
 						mistakes++;
@@ -866,115 +889,136 @@ int main() {
 					cout << "You made " << mistakes << " mistakes ;(" << endl;
 				}
 			} else if (rows == 30 and columns == 36) {
-			//LOCK #3:
-					int start = 1;
-					int end = 30;
-					int attempts = 0;
-					int max_attempts = 5;
-					int mistake = 0;
+				//LOCK #3:
+				int start = 1;
+				int end = 30;
+				int attempts = 0;
+				int max_attempts = 5;
+				int mistake = 0;
+				int a = 0;
 
-					vector<string> sequence(30);
+				vector<string> sequence(30);
 
-					for (int i = start; i <= end; i++) {
-						if (i % 15 == 0) {
-							sequence.at(i - 1) = "fizzbuzz";
-						} else if (i % 14 == 0) {
-							sequence.at(i - 1) = "3x + 2 = 44";
-						} else if (i % 13 == 0) {
-							sequence.at(i - 1) = "deurtuahtiang";
-						} else if (i % 11 == 0) {
-							sequence.at(i - 1) = "uh-lehvuhntean";
-						} else if (i % 5 == 0) {
-							sequence.at(i - 1) = "buzz";
-						} else if (i % 3 == 0) {
-							sequence.at(i - 1) = "fizz";
-						} else {
-							sequence.at(i - 1) = to_string(i);
+				for (int i = start; i <= end; i++) {
+					if (i % 15 == 0) {
+						sequence.at(i - 1) = "fizzbuzz";
+					} else if (i % 14 == 0) {
+						sequence.at(i - 1) = "3x + 2 = 44";
+					} else if (i % 13 == 0) {
+						sequence.at(i - 1) = "deurtuahtiang";
+					} else if (i % 11 == 0) {
+						sequence.at(i - 1) = "uh-lehvuhntean";
+					} else if (i % 5 == 0) {
+						sequence.at(i - 1) = "buzz";
+					} else if (i % 3 == 0) {
+						sequence.at(i - 1) = "fizz";
+					} else {
+						sequence.at(i - 1) = to_string(i);
+					}
+				}
+				movecursor(a + 1, COLUMNS + 5);
+				cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
+				movecursor(a + 1, COLUMNS + 5);
+				cout << "New Ruels: " << endl;
+				movecursor(a + 1, COLUMNS + 5);
+				cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
+				movecursor(a + 1, COLUMNS + 5);
+				cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
+				movecursor(a + 1, COLUMNS + 5);
+				cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
+				movecursor(a + 1, COLUMNS + 5);
+				cout << "good luck :)" << endl;
+				movecursor(a + 1, COLUMNS + 5);
+				cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
+
+				while (attempts < max_attempts) {
+					for (int i = 0; i < sequence.size(); i++) {
+						string fb;
+						getline(cin, fb);
+						if (fb != sequence.at(i)) {
+							mistake++;
 						}
 					}
 
-					cout << "FizzBuzz again...But with a really really really fun twist :D" << endl;
-					cout << "New Ruels: " << endl;
-					cout << "Numbers divisible by 11 are now uh-lehvuhntean" << endl;
-					cout << "Numbers divisible by 13 are now deurtuahtiang" << endl;
-					cout << "Numbers divisible by 14 are now 3x + 2 = 44" << endl;
-					cout << "good luck :)" << endl;
-					cout << "Complete the sequence in one shot from " << start << " to " << end << ":" << endl;
-
-					while (attempts < max_attempts) {
-						for (int i = 0; i < sequence.size(); i++) {
-							string fb;
-							getline(cin, fb);
-							if (fb != sequence.at(i)) {
-								mistake++;
-							}
-						}
-
-						if (mistake == 0) {
-							cout << "Congrats, you did it!" << endl;
-							break;
-						} else {
-							attempts++;
-						}
-						if (attempts < max_attempts) {
-							cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
-						} else {
-							cout << "You failed the sequence :(...womp womp" << endl;
-						}
+					if (mistake == 0) {
+						cout << "Congrats, you did it!" << endl;
+						puzzle3 = true;
+						rows = 29;
+						break;
+					} else {
+						attempts++;
 					}
+					if (attempts < max_attempts) {
+						cout << "Redo the fizzbuzz sequence from " << start << " to " << end << ":" << endl;
+					} else {
+						cout << "You failed the sequence :(...womp womp" << endl;
+					}
+				}
 			} else if (rows == 33 and columns == 2) {
-			//LOCK #4:
+				//LOCK #4:
 				string word;
 				cout << "Enter a word:" << endl;
 				cin >> word;
+				int a = 2;
 
 				string reversed;
 
 				for (int i = word.size() - 1; i >= 0; i--) { // ai fixed for loop
-				reversed += word.at(i);
+					reversed += word.at(i);
 				}
 
 				if (word == reversed) {
+					movecursor(a + 1, COLUMNS + 5);
 					cout << "Congrats, you know a word that's reversed." << endl;
+					puzzle4 = true;
+					rows = 34;
 				} else {
+					movecursor(a + 1, COLUMNS + 5);
 					cout << "you fail" << endl;
+				}
+			} else if (rows == 12 and columns == 20) {
+				//LOCK #5:
+				int lowerBound = 1;
+				int upperBound = 6;
+				int numRectangles = 5;
+				int answer = 0;
+				int a = 2;
+				double result;
+
+				result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
+
+				// Puzzle #1:
+				movecursor(a + 1, COLUMNS + 5);
+				cout << "Using Left Riemann Sum, find the area under x^4 from 1 to 6 with 5 rectangles" << endl;
+
+				int count = 0;
+
+				while (count != 3) {
+					movecursor(a + 1, COLUMNS + 5);
+					cout << "Enter answer: ";
+					cin >> answer;
+					if (result == answer) {
+						movecursor(a + 1, COLUMNS + 5);
+						cout << "Yippee you did it :DD" << endl;
+						puzzle5 = true;
+						rows = 13;
+						break;
+					} else {
+						movecursor(a + 1, COLUMNS + 5);
+						cout << "womp womp :(, try again" << endl;
 					}
-			} else if (rows == 12 and columnd == 20) {
-			//LOCK #5:
-			int lowerBound = 1;
-			int upperBound = 6;
-			int numRectangles = 5;
-			int answer = 0;
 
-			double result;
+					count++;
+				}
 
-			result = leftriemannSum(lowerBound, upperBound, numRectangles); // Answer is 979 for future reference.
-
-			// Puzzle #1:
-			cout << "Using Left Riemann Sum, find the area under x^4 from 1 to 6 with 5 rectangles" << endl;
-
-			int count = 0;
-
-			while (count != 3) {
-			cout << "Enter answer: ";
-			cin >> answer;
-			if (result == answer) {
-				cout << "Yippee you did it :DD" << endl;
-					break;
-			}else {
-				cout << "womp womp :(, try again" << endl;
-			}
-
-			count++;
-			}
-
-			if (count == 3) {
-				cout << "You failed, try again" << endl;
-			}
+				if (count == 3) {
+					movecursor(a + 1, COLUMNS + 5);
+					cout << "You failed, try again" << endl;
+				}
 
 			}
 		}
-		*/
+
 	}
 	set_raw_mode(false);
 	show_cursor(true);
