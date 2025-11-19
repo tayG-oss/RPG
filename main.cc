@@ -331,14 +331,16 @@ int main() {
 			printMap(rows, columns);
 			prevRow = rows;
 			prevCol = columns;
-			movecursor(ROWS + 2, 0);
+			movecursor(12, COLUMNS + 5);
+			/*
+			cout << GREEN << "CURRENT HP: " << hp variable;
+			*/
 			cout << YELLOW << "ROW: " << rows << RED << " COL: " << columns << RESET; //Temporary line for positions
 			cout << YELLOW << " PREVROW: " << barRow << RED << " PREVCOL: " << barCol << RESET; //Temporary line for positions
 			movecursor(ROWS + 3, 0);
 			cout << YELLOW << "STAGE: " << stage << RED << " Tasks completed: " << completedTask << RESET; //Temporary line for positions
 			cout.flush();
 		}
-
 
 		//WALL BARRIERS AND GATES
 		if (getLocation(rows, columns) == '-') { //Bottoms and tops
@@ -359,28 +361,25 @@ int main() {
 			} else if (columns == 0 or columns == 6 or columns == 18 or columns == 8 or columns == 19 or columns == 11 or columns == 14) columns++;
 			else if (columns == 40 or columns == 34 or columns == 22 or columns == 21 or columns == 29 or columns == 26 or columns == 32) columns--;
 
-		} /*else if (getLocation(rows, columns) == '*') { //Gates ( 53, 49, 38, 25, 11, 4)
-			if (completedTask == 1 && stage == 0) {
-				movecursor(2, COLUMNS + 5);
+		} else if (getLocation(rows, columns) == '*') { //Gates ( 53, 49, 38, 25, 11, 4)
+			movecursor(2, COLUMNS + 5);
+			if (completedTask == 1 && stage == 0 and rows == 53) {
 				cout << "The gate has been unlocked.\n";
-				for (int i = 0; i < 5; i++) setLocation(53 i + 18, ' ');
-			} else if (completedTask == 2 && stage == 0) {
-				movecursor(2, COLUMNS + 5);
-                cout << "The gate has been unlocked.\n";
-                for (int i = 0; i < 5; i++) setLocation(49, i + 18, ' ');
+				for (int i = 0; i < 5; i++) setLocation(53, i + 18, ' ');
+			} else if (completedTask == 2 and stage == 0 and rows == 49) {
+				cout << "The gate has been unlocked.\n";
+				for (int i = 0; i < 5; i++) setLocation(49, i + 18, ' ');
 				stage = 1;
-			} else if (completedTask == ... && stage == 1) {
-				movecursor(2, COLUMNS + 5);
-                cout << "The gate has been unlocked.\n";
-                for (int i = 0; i < 5; i++) setLocation(38, i + 18, ' ');
-                stage = 2;
+			} else if (completedTask == 4 && stage == 1 and rows == 38) {
+				cout << "The gate has been unlocked.\n";
+				for (int i = 0; i < 5; i++) setLocation(38, i + 18, ' ');
+				stage = 2;
 			} else {
 				rows++;
-				movecursor(2, COLUMNS + 5);
 				cout << "You cannot enter this area yet, the gate is locked.\n";
 				usleep(1'000'000);
 			}
-		} */
+		}
 
 		//CHARACTERS AND OBJECTS
 		if (getLocation(rows, columns) == 'D') { //End goal/Dragon is saved
@@ -434,7 +433,25 @@ int main() {
 				cout << WHITE << "Oh thank goodness! You finally got the gate open!\n";
 				movecursor(4, COLUMNS + 5);
 				cout << WHITE << "The dragon is further up ahead, but there's more locks in the way. We need to hurry to get the gold!\n";
+				movecursor(5, COLUMNS + 5);
+				cout << WHITE << "Have this potion to heal yourself up! The more hands on deck, the quicker we can get the gold.\n";
+				//HP Heal
 				//completedTask = 2;
+			} else if (rows == 18 and columns == 20) {
+				cout << BOLDGREEN << "LAZY COMMANDER GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "The hero is just past this way. I don't want to deal with him.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "Here kid, here's a healing potion. Take it and defeat the human hero for me.\n";
+				//HP Heal
+				//completedTask = 2;
+			} else if (rows == 9 and columns == 18) {
+				cout << BOLDGREEN << "SCARED COMMANDER GOBLIN:\n";
+				movecursor(3, COLUMNS + 5);
+				cout << WHITE << "Look man, I have no idea how I got this far. I do NOT want to be the one to deal with the princess.\n";
+				movecursor(4, COLUMNS + 5);
+				cout << WHITE << "I do NOT want to die, so take this potion and deal with her for me.\n";
+				//HP Heal
 			}
 		}
 
