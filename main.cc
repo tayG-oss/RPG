@@ -606,22 +606,23 @@ int main() {
 				sequence.at(i - 1) = "buzz";
 			} else if (i % 3 == 0) {
 				sequence.at(i - 1) = "fizz";
-			} else {
-				sequence.at(i - 1) = to_string(i);
+				/*} else {
+					sequence.at(i - 1) = to_string(i);
 
-				cout << "Boss HP: " << firstBoss - Mario << endl;
-				movecursor(loc, COLUMNS + 5);
-				loc++;
-				cout << firstBoss.getName() << " Attacked you!\n";
-				movecursor(loc, COLUMNS + 5);
-				loc++;
-				cout << "Your HP: " << firstBoss + Mario << endl;
-				
-			} else if (choice == 2) {
-				movecursor(loc, COLUMNS + 5);
-				loc++;
-cout << WHITE << "You chose to dodge!" << endl;
-}
+					cout << "Boss HP: " << firstBoss - Mario << endl;
+					movecursor(loc, COLUMNS + 5);
+					loc++;
+					cout << firstBoss.getName() << " Attacked you!\n";
+					movecursor(loc, COLUMNS + 5);
+					loc++;
+					cout << "Your HP: " << firstBoss + Mario << endl;
+
+				} else if (choice == 2) {
+					movecursor(loc, COLUMNS + 5);
+					loc++;
+					cout << WHITE << "You chose to dodge!" << endl;
+				*/
+			}
 		}
 
 	} // while }
